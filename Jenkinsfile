@@ -14,7 +14,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh 'mvn deploy' -Durl=file://deploy
+                sh 'mvn deploy -Durl=file://deploy'
             }
         }
     }
