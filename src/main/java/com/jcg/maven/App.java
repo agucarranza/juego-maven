@@ -1,5 +1,5 @@
 package com.jcg.maven;
-import front.Gui;
+//import com.sun.xml.internal.ws.wsdl.writer.document.Part;
 
 /**
  * Hello world!
@@ -10,9 +10,15 @@ public class App
     public static void main( String[] args )
     {
 
-        VistaPartida v = new VistaPartida();
+        VistaPartida vista = new VistaPartida();
+        ModeloPartida modelo = new ModeloPartida();
+        ControllerPartida controlador = new ControllerPartida(vista, modelo);
 
-        v.setVisible(true);
-        System.out.println( "Hello World!" );
+        vista.setVisible(true);
+
+
+
+
+
     }
 }

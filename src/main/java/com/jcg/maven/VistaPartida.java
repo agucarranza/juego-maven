@@ -2,17 +2,19 @@ package com.jcg.maven;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
 
 public class VistaPartida extends JFrame {
 
-    private ArrayList<JLabel> manoPC = new ArrayList<JLabel>();
+    private ArrayList<JLabel> manoPC = new ArrayList<>();
     private ArrayList<JLabel> manoUsuario = new ArrayList<JLabel>();
     private ArrayList<JLabel> bazaPC = new ArrayList<JLabel>();
     private ArrayList<JLabel> bazaUsuario = new ArrayList<JLabel>();
     ImageIcon img = new ImageIcon("dorsal.jpg");
+    JButton boton;
 
     public VistaPartida() {
 
@@ -40,13 +42,17 @@ public class VistaPartida extends JFrame {
 
     }
 
+    /**
+     * Genera las manos para los dos usuarios.
+     */
     private void crearCartas(){
 
         int x1=10, x2=100;
 
         for(int i=0; i<5; i++){
-            JLabel carta = new JLabel(img);
-            JLabel carta2 = new JLabel(img);
+
+            JLabel carta = new JLabel();
+            JLabel carta2 = new JLabel();
             carta.setOpaque(true);
             carta.setBounds(x1,15,70,100);
             //llamada al metodo con valor de cartaPC
@@ -57,13 +63,14 @@ public class VistaPartida extends JFrame {
             manoUsuario.add(i,carta2);
             x1=x1+80;
             x2=x2+80;
+
         }
         crearBazas();
     }
 
     private void crearBotones(JPanel panelAux){
 
-        JButton boton = new JButton("Elegir");
+        boton = new JButton("Repartir cartas");
         boton.setFont(new Font("arial",Font.BOLD,10));
         boton.setBounds(560,270,70,20);
         panelAux.add(boton);
@@ -125,5 +132,18 @@ public class VistaPartida extends JFrame {
         labelBazaUsuario.setOpaque(true);
 
         return labelBazaUsuario;
+    }
+
+    void addRepartirListener(ActionListener listener) {
+        boton.addActionListener(listener);
+    }
+
+    void setCartasManos(ArrayList<String> arrayCartaPc, ArrayList<String> arrayCartaUsuario) {
+        for (JLabel jlabel: manoPC) {
+            jlabel.setText(arrayCartaPc.get(manoPC.indexOf(jlabel)));
+        }
+        for (JLabel jlabel: manoUsuario) {
+            jlabel.setText(arrayCartaUsuario.get(manoUsuario.indexOf(jlabel)));
+        }
     }
 }
