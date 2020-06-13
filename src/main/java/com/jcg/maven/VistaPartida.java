@@ -1,6 +1,7 @@
 package com.jcg.maven;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,6 +12,11 @@ public class VistaPartida extends JFrame {
 
     private ArrayList<JLabel> manoPC = new ArrayList<>();
     private ArrayList<JLabel> manoUsuario = new ArrayList<JLabel>();
+    private JLabel titulo = new JLabel("N° DE BAZAS");
+    private JLabel estadisticas = new JLabel();
+    private String estadisticasDato = "";
+
+
     private ArrayList<JLabel> bazaPC = new ArrayList<JLabel>();
     private ArrayList<JLabel> bazaUsuario = new ArrayList<JLabel>();
     ImageIcon img = new ImageIcon("dorsal.jpg");
@@ -39,6 +45,7 @@ public class VistaPartida extends JFrame {
         crearCartas();
         crearBotones(panel);
         acomodarCartas(panel);
+        panelBazas(panel);
 
     }
 
@@ -95,6 +102,21 @@ public class VistaPartida extends JFrame {
 
     }
 
+    private void panelBazas(JPanel panelAux){
+
+        titulo.setBounds(550,15,140,20);
+        setLabelPuntos(titulo);
+
+        estadisticas.setBounds(550,35,140,50);
+        estadisticas.setVerticalAlignment(SwingConstants.TOP);
+        setLabelPuntos(estadisticas);
+        estadisticas.setText(estadisticasDato);
+
+        panelAux.add(titulo);
+        panelAux.add(estadisticas);
+
+    }
+
     private void crearBazas(){
         //for para ir agregando las bazas en otro metodo
         JLabel cartaBazaPC = new JLabel(img);
@@ -145,5 +167,18 @@ public class VistaPartida extends JFrame {
         for (JLabel jlabel: manoUsuario) {
             jlabel.setText(arrayCartaUsuario.get(manoUsuario.indexOf(jlabel)));
         }
+    }
+
+        private void setLabelPuntos(JLabel labelAux){
+
+        Color color = new Color(103,156,244);
+        Border border = LineBorder.createBlackLineBorder();
+        labelAux.setHorizontalAlignment(SwingConstants.CENTER);
+        labelAux.setBackground(color);
+        labelAux.setFont(new Font("arial",Font.BOLD, 10));
+        labelAux.setForeground(Color.BLACK);
+        labelAux.setBorder(border);
+        labelAux.setOpaque(true);
+
     }
 }
