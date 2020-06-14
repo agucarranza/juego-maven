@@ -18,6 +18,21 @@ public class ControllerPartida {
 
         this.vista.addRepartirListener(new RepartirListener());
         this.vista.addDescartarListener(new DescartarListener());
+        this.vista.addJuegaPCListener(new JuegaPCListener());
+    }
+    class JuegaPCListener implements  ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            modelo.toggleTurno();
+            //Carta carta = modelo.getUsuarioEnTurno()(Robot).;
+
+           /* int indice = Integer.parseInt(e.getID());
+            System.out.println("Mouse evento: " + indice);
+            modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), indice);
+            System.out.println(modelo.getMesaCartas().toString());*/
+        }
     }
 
     class RepartirListener implements ActionListener {
