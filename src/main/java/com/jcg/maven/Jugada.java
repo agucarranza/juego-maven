@@ -7,13 +7,15 @@ public class Jugada {
     private final Mazo mazo;
     private int paloTriunfo = -1;
     private final MesaCartas mesaCartas;
+    private ModeloPartida partida;
 
-    public Jugada(ArrayList<Usuario> arrayUsuarios, Mazo mazo, MesaCartas mesaCartas) {
+    public Jugada(ArrayList<Usuario> arrayUsuarios, Mazo mazo, MesaCartas mesaCartas, ModeloPartida partida) {
         this.arrayUsuarios = arrayUsuarios;
         this.mazo = mazo;
         this.mazo.barajar((int)(Math.random()));  //FIXME
         this.mesaCartas = mesaCartas;
         System.out.println("Jugada creada!");
+        this.partida = partida;
     }
 
     /**

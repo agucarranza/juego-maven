@@ -11,10 +11,14 @@ public class App
 
 
         ModeloPartida modelo = new ModeloPartida();
+
+        Jugada jugada = modelo.startJugada();
+        modelo.getJugadaActiva().repartirManos();
         VistaPartida vista = new VistaPartida(modelo);
         ControllerPartida controlador = new ControllerPartida(vista, modelo);
 
         vista.setVisible(true);
+        modelo.estadisticasEvento();
 
 
 

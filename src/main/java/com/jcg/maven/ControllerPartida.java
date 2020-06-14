@@ -1,5 +1,6 @@
 package com.jcg.maven;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -8,14 +9,15 @@ import java.util.ArrayList;
 
 public class ControllerPartida {
 
-    private VistaPartida vista;
-    private ModeloPartida modelo;
+    private final VistaPartida vista;
+    private final ModeloPartida modelo;
 
     public ControllerPartida(VistaPartida vista, ModeloPartida modelo) {
         this.modelo = modelo;
         this.vista = vista;
 
         this.vista.addRepartirListener(new RepartirListener());
+        this.vista.addDescartarListener(new DescartarListener());
     }
 
     class RepartirListener implements ActionListener {
@@ -25,8 +27,7 @@ public class ControllerPartida {
             ArrayList<String> arrayUsuario = new ArrayList<>();
             ArrayList<String> arrayPC = new ArrayList<>();
 
-            modelo.startJugada();
-            modelo.getJugadaActiva().repartirManos();
+
 
             for (Carta carta: modelo.getUsuarios().get(0).getMyMano()) {
                arrayUsuario.add(carta.toString());
@@ -44,8 +45,11 @@ public class ControllerPartida {
 
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
-
-
+            int indice = Integer.parseInt(mouseEvent.getComponent().getName());
+            System.out.println("Mouse evento: " + indice);
+            modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), indice);
+            System.out.println(modelo.getMesaCartas().toString());
+            modelo.notificarObservers();
         }
 
         @Override

@@ -16,7 +16,7 @@ public class MesaCartas {
     }
 
     public void agregarCarta(Carta carta){
-        if (cantUsuarios < cartas.size())
+        if (cantUsuarios <= cartas.size())
             throw new IndexOutOfBoundsException("La mesa esta llena");
         else
             cartas.add(carta);
@@ -35,5 +35,5 @@ public class MesaCartas {
     }
 }
 
-//TODO Aca
+
 

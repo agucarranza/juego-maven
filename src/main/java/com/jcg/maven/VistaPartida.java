@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 
@@ -14,20 +15,21 @@ public class VistaPartida extends JFrame implements Observer {
 
 
 
-    private ArrayList<JLabel> manoPC = new ArrayList<>();
-    private ArrayList<JLabel> manoUsuario = new ArrayList<JLabel>();
-    private JLabel titulo = new JLabel("ESTADISTICAS");
-    private JLabel estadisticas = new JLabel();
+    private final ArrayList<JLabel> manoPC = new ArrayList<>();
+    private final ArrayList<JLabel> manoUsuario = new ArrayList<>();
+    private final JLabel titulo = new JLabel("ESTADISTICAS");
+    private final JLabel estadisticas = new JLabel();
 
 
 
-    private ArrayList<JLabel> bazaPC = new ArrayList<JLabel>();
-    private ArrayList<JLabel> bazaUsuario = new ArrayList<JLabel>();
+    private final ArrayList<JLabel> bazaPC = new ArrayList<>();
+    private final ArrayList<JLabel> bazaUsuario = new ArrayList<>();
     ImageIcon img = new ImageIcon("dorsal.jpg");
     JButton boton;
 
     public VistaPartida(ModeloPartida modelo) {
         this.modelo = modelo;
+
 
         setSize(800, 500);
         setLocationRelativeTo(null);
@@ -65,6 +67,7 @@ public class VistaPartida extends JFrame implements Observer {
 
             JLabel carta = new JLabel();
             JLabel carta2 = new JLabel();
+            carta2.setName(Integer.toString(i));
             carta.setOpaque(true);
             carta.setBounds(x1,15,70,100);
             //llamada al metodo con valor de cartaPC
@@ -83,6 +86,7 @@ public class VistaPartida extends JFrame implements Observer {
     private void crearBotones(JPanel panelAux){
 
         boton = new JButton("Repartir cartas");
+        boton.setName("Boton1");
         boton.setFont(new Font("arial",Font.BOLD,10));
         boton.setBounds(560,270,70,20);
         panelAux.add(boton);
@@ -165,12 +169,27 @@ public class VistaPartida extends JFrame implements Observer {
         boton.addActionListener(listener);
     }
 
+    void addDescartarListener(MouseListener listener) {
+        for (JLabel label: manoUsuario) {
+        label.addMouseListener(listener);
+        //label.get
+
+
+        }
+    }
+
     void setCartasManos(ArrayList<String> arrayCartaPc, ArrayList<String> arrayCartaUsuario) {
         for (JLabel jlabel: manoPC) {
             jlabel.setText(arrayCartaPc.get(manoPC.indexOf(jlabel)));
         }
         for (JLabel jlabel: manoUsuario) {
             jlabel.setText(arrayCartaUsuario.get(manoUsuario.indexOf(jlabel)));
+        }
+    }
+
+    void setCartasUsuario(ArrayList<String> array) {
+        for (JLabel jlabel: manoUsuario) {
+            jlabel.setText(array.get(manoUsuario.indexOf(jlabel)));
         }
     }
 
@@ -187,8 +206,20 @@ public class VistaPartida extends JFrame implements Observer {
 
     }
 
+    void displayErrorMessage(String errorMessage){
+        JOptionPane.showMessageDialog(this, errorMessage);
+    }
+
     @Override
     public void update() {
         estadisticas.setText(modelo.getEstadisticas());
+    }
+
+    @Override
+    public void updateMano() {
+        for (JLabel jLabel: manoUsuario) {
+            jLabel.setText(modelo.getStringMano(Integer.parseInt(jLabel.getName())));
+//            jLabel.setText(modelo.getStringMano(manoUsuario.indexOf(jLabel)));
+        }
     }
 }

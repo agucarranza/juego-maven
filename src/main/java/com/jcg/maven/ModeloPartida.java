@@ -13,8 +13,8 @@ public class ModeloPartida implements Sujeto{
     private final Usuario humano;
     private final Usuario robot;
     private boolean turno = false;
-    private ArrayList<Usuario> usuarios;
-    private ArrayList<Jugada> jugadas;
+    private final ArrayList<Usuario> usuarios;
+    private final ArrayList<Jugada> jugadas;
     private Usuario usuarioEnTurno;
 
 
@@ -34,6 +34,12 @@ public class ModeloPartida implements Sujeto{
         System.out.println("Partida creada");
     }
 
+    /**
+     * Usar esta funcion para agregar cartas a la mesa y quitarla de la mano.
+     * No usar las funciones individualmente.
+     * @param usuario El usuario que descarta la carta
+     * @param index El numero de orden de la carta descartada.
+     */
     public void bajarALaMesa(Usuario usuario, int index) {
         Carta carta = usuario.descartar(index);
         mesaCartas.agregarCarta(carta);
@@ -50,11 +56,11 @@ public class ModeloPartida implements Sujeto{
     public Jugada startJugada() {
         // implementado para que se puedan agregar mas jugadores
         // en el futuro.
-        Jugada jugada = new Jugada(usuarios,mazo,mesaCartas);
+        Jugada jugada = new Jugada(usuarios,mazo,mesaCartas,this);
         jugadas.add(jugada);
         jugadaActiva = jugada;
 
-        estadisticasEvento();
+        //estadisticasEvento();
         return jugada;
     }
 
@@ -68,9 +74,7 @@ public class ModeloPartida implements Sujeto{
         //En la primera Jugada, las posiciones son arbitrarias.
         if (jugadas.size() == 1) {
             for (Usuario usuario: usuarios) {
-                if (usuarios.indexOf(usuario)==usuarios.size()-1)
-                    usuario.setPie(true);
-                else usuario.setPie(false);
+                usuario.setPie(usuarios.indexOf(usuario) == usuarios.size() - 1);
             }
         }
         else {
@@ -87,8 +91,6 @@ public class ModeloPartida implements Sujeto{
             }
         }
     }
-
-    public Jugada getUltimaJugada() { return jugadas.get(jugadas.size()-1); }
 
     public Usuario getUsuarioEnTurno() { return usuarioEnTurno; }
 
@@ -110,8 +112,12 @@ public class ModeloPartida implements Sujeto{
 
     @Override
     public void notificarObservers() {
+        if (observers.size() == 0)
+            throw new NullPointerException("No hay un observer registrado");
+
         for (Observer observer: observers) {
             observer.update();
+            observer.updateMano();
         }
     }
 
@@ -128,5 +134,17 @@ public class ModeloPartida implements Sujeto{
         notificarObservers();
     }
 
+
+
     public String getEstadisticas() { return estadisticas; }
+
+    public String getStringMano(int index) {
+        if(index >= humano.getMyMano().size())
+            return "";
+        else
+            return humano.getMyMano().get(index).toString();
+    }
+
+
+
 }
