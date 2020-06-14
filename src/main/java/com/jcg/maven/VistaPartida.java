@@ -11,25 +11,22 @@ public class VistaPartida extends JFrame implements Observer {
 
     ModeloPartida modelo;
 
-
-
     private final ArrayList<JLabel> manoPC = new ArrayList<>();
     private final ArrayList<JLabel> manoUsuario = new ArrayList<>();
     private final JLabel titulo = new JLabel("ESTADISTICAS");
     private final JLabel estadisticas = new JLabel();
 
 
-
     private final ArrayList<JLabel> bazaPC = new ArrayList<>();
     private final ArrayList<JLabel> bazaUsuario = new ArrayList<>();
     ImageIcon img = new ImageIcon("dorsal.jpg");
-    JButton boton;
+    JButton boton,boton2;
 
     public VistaPartida(ModeloPartida modelo) {
         this.modelo = modelo;
 
 
-        setSize(800, 500);
+        setSize(730, 600);
         setLocationRelativeTo(null);
         setTitle("La Mosca");
         panelPartida();
@@ -71,7 +68,7 @@ public class VistaPartida extends JFrame implements Observer {
             //llamada al metodo con valor de cartaPC
             manoPC.add(i,carta);
             carta2.setOpaque(true);
-            carta2.setBounds(x2,305,70,100);
+            carta2.setBounds(x2,400,70,100);
             //llamada al metodo con valor de cartaUsuario
             manoUsuario.add(i,carta2);
             x1=x1+80;
@@ -88,6 +85,12 @@ public class VistaPartida extends JFrame implements Observer {
         boton.setFont(new Font("arial",Font.BOLD,10));
         boton.setBounds(560,270,70,20);
         panelAux.add(boton);
+
+        boton2 = new JButton("Juega PC");
+        boton2.setName("Boton1");
+        boton2.setFont(new Font("arial",Font.BOLD,10));
+        boton2.setBounds(560,320,70,20);
+        panelAux.add(boton2);
 
     }
 
@@ -132,7 +135,7 @@ public class VistaPartida extends JFrame implements Observer {
         bazaPC.add(cartaBazaPC);
         JLabel cartaBazaUsuario = new JLabel(img);
         cartaBazaUsuario.setOpaque(true);
-        cartaBazaUsuario.setBounds(10,305,70,100);
+        cartaBazaUsuario.setBounds(10,400,70,100);
         bazaUsuario.add(cartaBazaUsuario);
 
     }
@@ -153,7 +156,7 @@ public class VistaPartida extends JFrame implements Observer {
     private JLabel crearLabelUsuario(){
         JLabel labelBazaUsuario = new JLabel("BAZA USUARIO");
         Color color = new Color(54,146,47);
-        labelBazaUsuario.setBounds(10,295,70,10);
+        labelBazaUsuario.setBounds(10,400,70,10);
         labelBazaUsuario.setFont(new Font("arial", Font.ITALIC,8));
         labelBazaUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         labelBazaUsuario.setForeground(Color.BLUE);
@@ -165,6 +168,10 @@ public class VistaPartida extends JFrame implements Observer {
 
     void addRepartirListener(ActionListener listener) {
         boton.addActionListener(listener);
+    }
+
+    void addJuegaPCListener(ActionListener listener) {
+        boton2.addActionListener(listener);
     }
 
     void addDescartarListener(MouseListener listener) {
@@ -214,7 +221,9 @@ public class VistaPartida extends JFrame implements Observer {
             jLabel.setText(modelo.getStringMano(Integer.parseInt(jLabel.getName())));
 //            jLabel.setText(modelo.getStringMano(manoUsuario.indexOf(jLabel)));
             if(modelo.getStringMano(Integer.parseInt(jLabel.getName())).equals(""))
-                jLabel.setVisible(false);
+                jLabel.setBounds(200,290,jLabel.getWidth(),jLabel.getHeight());
+              //  jLabel.setBounds(230,130,jLabel.getWidth(),jLabel.getHeight());
+
         }
     }
 }
