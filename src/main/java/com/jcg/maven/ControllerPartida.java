@@ -2,6 +2,8 @@ package com.jcg.maven;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class ControllerPartida {
@@ -34,6 +36,35 @@ public class ControllerPartida {
             }
 
             vista.setCartasManos(arrayPC, arrayUsuario);
+
+        }
+    }
+
+    class DescartarListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent mouseEvent) {
 
         }
     }

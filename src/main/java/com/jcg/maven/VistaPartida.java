@@ -8,13 +8,17 @@ import java.util.ArrayList;
 
 
 
-public class VistaPartida extends JFrame {
+public class VistaPartida extends JFrame implements Observer {
+
+    ModeloPartida modelo;
+
+
 
     private ArrayList<JLabel> manoPC = new ArrayList<>();
     private ArrayList<JLabel> manoUsuario = new ArrayList<JLabel>();
-    private JLabel titulo = new JLabel("N° DE BAZAS");
+    private JLabel titulo = new JLabel("ESTADISTICAS");
     private JLabel estadisticas = new JLabel();
-    private String estadisticasDato = "";
+
 
 
     private ArrayList<JLabel> bazaPC = new ArrayList<JLabel>();
@@ -22,15 +26,16 @@ public class VistaPartida extends JFrame {
     ImageIcon img = new ImageIcon("dorsal.jpg");
     JButton boton;
 
-    public VistaPartida() {
+    public VistaPartida(ModeloPartida modelo) {
+        this.modelo = modelo;
 
         setSize(800, 500);
         setLocationRelativeTo(null);
         setTitle("La Mosca");
-
         panelPartida();
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        modelo.agregarObserver(this);
     }
 
     private void panelPartida() {
@@ -107,10 +112,10 @@ public class VistaPartida extends JFrame {
         titulo.setBounds(550,15,140,20);
         setLabelPuntos(titulo);
 
-        estadisticas.setBounds(550,35,140,50);
+        estadisticas.setBounds(550,35,140,70);
         estadisticas.setVerticalAlignment(SwingConstants.TOP);
         setLabelPuntos(estadisticas);
-        estadisticas.setText(estadisticasDato);
+        estadisticas.setText("<html>Partida no iniciada</html>");
 
         panelAux.add(titulo);
         panelAux.add(estadisticas);
@@ -169,7 +174,7 @@ public class VistaPartida extends JFrame {
         }
     }
 
-        private void setLabelPuntos(JLabel labelAux){
+    private void setLabelPuntos(JLabel labelAux){
 
         Color color = new Color(103,156,244);
         Border border = LineBorder.createBlackLineBorder();
@@ -180,5 +185,10 @@ public class VistaPartida extends JFrame {
         labelAux.setBorder(border);
         labelAux.setOpaque(true);
 
+    }
+
+    @Override
+    public void update() {
+        estadisticas.setText(modelo.getEstadisticas());
     }
 }

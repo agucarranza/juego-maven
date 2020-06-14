@@ -2,7 +2,10 @@ package com.jcg.maven;
 
 import java.util.ArrayList;
 
-public class ModeloPartida {
+public class ModeloPartida implements Sujeto{
+
+    private final ArrayList<Observer> observers;
+    private String estadisticas;
 
     private Jugada jugadaActiva;
     private final MesaCartas mesaCartas;
@@ -26,6 +29,8 @@ public class ModeloPartida {
         usuarios = new ArrayList<>();
         usuarios.add(humano);
         usuarios.add(robot);
+
+        observers = new ArrayList<>();
         System.out.println("Partida creada");
     }
 
@@ -48,6 +53,8 @@ public class ModeloPartida {
         Jugada jugada = new Jugada(usuarios,mazo,mesaCartas);
         jugadas.add(jugada);
         jugadaActiva = jugada;
+
+        estadisticasEvento();
         return jugada;
     }
 
@@ -81,23 +88,45 @@ public class ModeloPartida {
         }
     }
 
-    public Jugada getUltimaJugada() {
-        return jugadas.get(jugadas.size()-1);
+    public Jugada getUltimaJugada() { return jugadas.get(jugadas.size()-1); }
+
+    public Usuario getUsuarioEnTurno() { return usuarioEnTurno; }
+
+    public MesaCartas getMesaCartas() { return mesaCartas; }
+
+    public Jugada getJugadaActiva() { return jugadaActiva; }
+
+    public ArrayList<Usuario> getUsuarios() { return usuarios; }
+
+    @Override
+    public void agregarObserver(Observer observer) {
+        observers.add(observer);
     }
 
-    public Usuario getUsuarioEnTurno() {
-        return usuarioEnTurno;
+    @Override
+    public void quitarObserver(Observer observer) {
+        observers.remove(observer);
     }
 
-    public MesaCartas getMesaCartas() {
-        return mesaCartas;
+    @Override
+    public void notificarObservers() {
+        for (Observer observer: observers) {
+            observer.update();
+        }
     }
 
-    public Jugada getJugadaActiva() {
-        return jugadaActiva;
+    /**
+     * Funcion que hay que llamar en cada funcion que requiera actualizar las estadisticas.
+     */
+    public void estadisticasEvento() {
+        estadisticas = "<html>" +
+                "Turno: " + usuarioEnTurno.getTipoUsuario() +
+                " BazasUsuario:" + humano.getMyBazas().size() +
+                " BazasRobot:" + robot.getMyBazas().size() +
+                " Cant.Jugadas:" + jugadas.size() +
+                "</html>";
+        notificarObservers();
     }
 
-    public ArrayList<Usuario> getUsuarios() {
-        return usuarios;
-    }
+    public String getEstadisticas() { return estadisticas; }
 }

@@ -8,7 +8,7 @@ public class Usuario {
 
     protected ArrayList<Carta> myMano;
     private ArrayList<Baza>  myBazas;
-    private int tipoUsuario;
+    private final int tipoUsuario;
     private boolean pie = false;
 
 
@@ -50,5 +50,13 @@ public class Usuario {
 
     public ArrayList<Carta> getMyMano() {
         return myMano;
+    }
+
+    public int getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public ArrayList<Baza> getMyBazas() {
+        return myBazas;
     }
 }
