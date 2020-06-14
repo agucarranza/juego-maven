@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class MesaCartas {
 
-    private ArrayList<Carta> cartas;
-    private int cantUsuarios;
+    private final ArrayList<Carta> cartas;
+    private final int cantUsuarios;
 
 
 

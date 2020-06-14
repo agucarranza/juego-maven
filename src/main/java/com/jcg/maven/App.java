@@ -18,7 +18,7 @@ public class App
         ControllerPartida controlador = new ControllerPartida(vista, modelo);
 
         vista.setVisible(true);
-        vistaConsola.setVisible(true);
+       // vistaConsola.setVisible(true);
 
         modelo.estadisticasEvento();
     }

@@ -170,7 +170,6 @@ public class VistaPartida extends JFrame implements Observer {
     void addDescartarListener(MouseListener listener) {
         for (JLabel label: manoUsuario) {
         label.addMouseListener(listener);
-        //label.get
         }
     }
 
@@ -214,6 +213,8 @@ public class VistaPartida extends JFrame implements Observer {
         for (JLabel jLabel: manoUsuario) {
             jLabel.setText(modelo.getStringMano(Integer.parseInt(jLabel.getName())));
 //            jLabel.setText(modelo.getStringMano(manoUsuario.indexOf(jLabel)));
+            if(modelo.getStringMano(Integer.parseInt(jLabel.getName())).equals(""))
+                jLabel.setVisible(false);
         }
     }
 }
