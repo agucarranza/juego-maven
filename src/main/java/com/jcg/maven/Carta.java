@@ -6,8 +6,8 @@ public class Carta {
     public static final int ESPADA  = 2;
     public static final int BASTO   = 1;
 
-    private int palo;
-    private int numero;
+    private final int palo;
+    private final int numero;
     private Usuario owner;
 
 

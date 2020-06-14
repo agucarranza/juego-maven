@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-
-
 public class VistaPartida extends JFrame implements Observer {
 
     ModeloPartida modelo;
@@ -172,9 +170,6 @@ public class VistaPartida extends JFrame implements Observer {
     void addDescartarListener(MouseListener listener) {
         for (JLabel label: manoUsuario) {
         label.addMouseListener(listener);
-        //label.get
-
-
         }
     }
 
@@ -194,7 +189,6 @@ public class VistaPartida extends JFrame implements Observer {
     }
 
     private void setLabelPuntos(JLabel labelAux){
-
         Color color = new Color(103,156,244);
         Border border = LineBorder.createBlackLineBorder();
         labelAux.setHorizontalAlignment(SwingConstants.CENTER);
@@ -203,7 +197,6 @@ public class VistaPartida extends JFrame implements Observer {
         labelAux.setForeground(Color.BLACK);
         labelAux.setBorder(border);
         labelAux.setOpaque(true);
-
     }
 
     void displayErrorMessage(String errorMessage){
@@ -220,6 +213,8 @@ public class VistaPartida extends JFrame implements Observer {
         for (JLabel jLabel: manoUsuario) {
             jLabel.setText(modelo.getStringMano(Integer.parseInt(jLabel.getName())));
 //            jLabel.setText(modelo.getStringMano(manoUsuario.indexOf(jLabel)));
+            if(modelo.getStringMano(Integer.parseInt(jLabel.getName())).equals(""))
+                jLabel.setVisible(false);
         }
     }
 }

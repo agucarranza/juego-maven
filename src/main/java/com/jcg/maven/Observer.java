@@ -2,7 +2,7 @@ package com.jcg.maven;
 
 public interface Observer {
 
-    public void update();
+    void update();
 
-    public void updateMano();
+    void updateMano();
 }

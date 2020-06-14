@@ -7,7 +7,7 @@ public class Usuario {
     public static final int ROBOT = 0;
 
     protected ArrayList<Carta> myMano;
-    private ArrayList<Baza>  myBazas;
+    private final ArrayList<Baza>  myBazas;
     private final int tipoUsuario;
     private boolean pie = false;
 
