@@ -3,12 +3,13 @@ package com.jcg.maven;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.InputMismatchException;
 
 public class Baza {
     private ArrayList<Carta> cartas;
     private Usuario owner = null;
-    private int paloBaza;
-    private int paloTriunfo;
+    private int paloBaza = -1;
+    private final int paloTriunfo;
 
     public Baza(int paloTriunfo) {
         cartas = new ArrayList<>();
@@ -17,7 +18,7 @@ public class Baza {
 
     public void agregarCarta(Carta carta) {
         cartas.add(carta);
-        if (cartas.size() == 1)
+        if (cartas.isEmpty())
             paloBaza = cartas.get(0).getPalo();  // Palo de la primera carta.
     }
 
@@ -36,10 +37,8 @@ public class Baza {
     /**
      * Funcion que calcula el Usuario ganador de una baza una vez que ha terminado.
      * @return El jugador cuya carta es ganadora.
-     * @throws Exception Cuando ninguna carta coincide con el palo de la baza. Debe haber por
-     * lo menos una.
      */
-    public Usuario calcularGanador() throws Exception {
+    public Usuario calcularGanador() {
         ArrayList<Carta> cartasTriunfo = new ArrayList<>();
         ArrayList<Carta> cartasBaza = new ArrayList<>();
         Carta cartaGanadora;
@@ -56,10 +55,14 @@ public class Baza {
         else if (cartasBaza.size() > 0)  //Hay por lo menos una carta del palo de la baza?
             cartaGanadora = Collections.max(cartasBaza, Comparator.comparing(Carta::getNumero));
         else
-            throw new Exception("El palo de la baza no coincide con las cartas analizadas");
+            throw new InputMismatchException("El palo de la baza no coincide con las cartas analizadas");
 
         this.owner = cartaGanadora.getOwner();
         return owner;
+    }
+
+    public int getPaloBaza() {
+        return paloBaza;
     }
 
     @Override

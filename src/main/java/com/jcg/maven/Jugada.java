@@ -27,10 +27,11 @@ public class Jugada {
             for(int i=0; i<5; i++) {
                 Carta carta = mazo.repartir();
                 usuario.recibirCarta(carta);
-                if ((i==4)&&(usuario.isPie()))
+                if ((i==4)&&(!usuario.isPie()))
                     paloTriunfo = carta.getPalo();
             }
         }
+        partida.notificarObservers();
     }
 
     /**
@@ -38,22 +39,21 @@ public class Jugada {
      * han tirado una carta a la mesa.
      * Se calcula el ganador
      * Se le agrega la baza al jugador ganador.
-     * @return La baza generada
      */
-    public Baza generarBaza(int paloTriunfo) throws Exception {
+    public void procesarBaza(int paloTriunfo, Baza baza) throws ArrayIndexOutOfBoundsException {
         ArrayList<Carta> cartas = mesaCartas.getCartas();
 
         if ( (cartas.size() != arrayUsuarios.size()) || (paloTriunfo < 0) )
             throw new ArrayIndexOutOfBoundsException("No han tirado todos los jugadores," +
                                                      "o todavia no se ha establecido el triunfo");
 
-        Baza baza = new Baza(paloTriunfo);
+//        Baza baza = new Baza(paloTriunfo);
         for (Carta carta: cartas)
             baza.agregarCarta(carta);
 
         Usuario usuarioGanador = baza.calcularGanador();
         usuarioGanador.agregarBaza(baza);
-        return baza;
+        //return baza;
     }
 
     public int getPaloTriunfo() {

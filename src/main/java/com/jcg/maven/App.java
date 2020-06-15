@@ -10,7 +10,7 @@ public class App
         ModeloPartida modelo = new ModeloPartida();
         Jugada jugada = modelo.startJugada();
 
-        modelo.getJugadaActiva().repartirManos();
+
         VistaPartida vista = new VistaPartida(modelo);
         VistaConsola vistaConsola = new VistaConsola();
 
@@ -20,6 +20,6 @@ public class App
         vista.setVisible(true);
         vistaConsola.setVisible(true);
 
-        modelo.estadisticasEvento();
+
     }
 }

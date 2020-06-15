@@ -1,115 +1,64 @@
 package com.jcg.maven;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class VistaPartida extends JFrame implements Observer {
-
     ModeloPartida modelo;
 
-    private final ArrayList<JLabel> manoPC = new ArrayList<>();
-    private final ArrayList<JLabel> manoUsuario = new ArrayList<>();
+    private ArrayList<JLabel> manoPC = new ArrayList<>();
+    private ArrayList<JLabel> manoUsuario = new ArrayList<>();
+    private ArrayList<JLabel> mesaCartas = new ArrayList<>();
     private final JLabel titulo = new JLabel("ESTADISTICAS");
     private final JLabel estadisticas = new JLabel();
-
-
-    private final ArrayList<JLabel> bazaPC = new ArrayList<>();
-    private final ArrayList<JLabel> bazaUsuario = new ArrayList<>();
     ImageIcon img = new ImageIcon("dorsal.jpg");
-    JButton boton,boton2;
+    JButton botonRepartir, botonJuegaPC, botonNuevaBaza;
+    JPanel panel;
 
     public VistaPartida(ModeloPartida modelo) {
         this.modelo = modelo;
-
-
-        setSize(730, 600);
+        setSize(1024, 768);
         setLocationRelativeTo(null);
         setTitle("La Mosca");
         panelPartida();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         modelo.agregarObserver(this);
     }
 
     private void panelPartida() {
-        JPanel panel = new JPanel();
+        this.panel = new JPanel();
         this.getContentPane().add(panel);
         panel.setLayout(null);
         Color color = new Color(54, 146, 47);
         panel.setBackground(color);
-
-        //54,146,47: r,g,b
-
-        crearCartas();
         crearBotones(panel);
-        acomodarCartas(panel);
         panelBazas(panel);
-
-    }
-
-    /**
-     * Genera las manos para los dos usuarios.
-     */
-    private void crearCartas(){
-
-        int x1=10, x2=100;
-
-        for(int i=0; i<5; i++){
-
-            JLabel carta = new JLabel();
-            JLabel carta2 = new JLabel();
-            carta2.setName(Integer.toString(i));
-            carta.setOpaque(true);
-            carta.setBounds(x1,15,70,100);
-            //llamada al metodo con valor de cartaPC
-            manoPC.add(i,carta);
-            carta2.setOpaque(true);
-            carta2.setBounds(x2,400,70,100);
-            //llamada al metodo con valor de cartaUsuario
-            manoUsuario.add(i,carta2);
-            x1=x1+80;
-            x2=x2+80;
-
-        }
-        crearBazas();
     }
 
     private void crearBotones(JPanel panelAux){
 
-        boton = new JButton("Repartir cartas");
-        boton.setName("Boton1");
-        boton.setFont(new Font("arial",Font.BOLD,10));
-        boton.setBounds(560,270,70,20);
-        panelAux.add(boton);
+        botonNuevaBaza = new JButton("Nueva Baza");
+        botonNuevaBaza.setName("botonNuevaBaza");
+        botonNuevaBaza.setBounds(560,370,150,30);
+        panelAux.add(botonNuevaBaza);
 
-        boton2 = new JButton("Juega PC");
-        boton2.setName("Boton1");
-        boton2.setFont(new Font("arial",Font.BOLD,10));
-        boton2.setBounds(560,320,70,20);
-        panelAux.add(boton2);
+        botonRepartir = new JButton("Repartir cartas");
+        botonRepartir.setName("botonRepartir");
+        botonRepartir.setBounds(560,270,150,30);
+        panelAux.add(botonRepartir);
 
-    }
-
-    private void acomodarCartas(JPanel panelAux){
-        for(int i=0; i<5; i++) {
-            panelAux.add(manoPC.get(i));
-            panelAux.add(manoUsuario.get(i));
-        }
-        JLabel mazo = new JLabel(img);
-        mazo.setBounds(560,150,70,100);
-        mazo.setOpaque(true);
-        panelAux.add(mazo);
-
-        panelAux.add(bazaPC.get(0));
-        panelAux.add(bazaUsuario.get(0));
-
-        panelAux.add(crearLabelPC());
-        panelAux.add(crearLabelUsuario());
-
+        botonJuegaPC = new JButton("Juega PC");
+        botonJuegaPC.setName("botonJuegaPC");
+        botonJuegaPC.setBounds(560,320,150,30);
+        panelAux.add(botonJuegaPC);
     }
 
     private void panelBazas(JPanel panelAux){
@@ -125,74 +74,6 @@ public class VistaPartida extends JFrame implements Observer {
         panelAux.add(titulo);
         panelAux.add(estadisticas);
 
-    }
-
-    private void crearBazas(){
-        //for para ir agregando las bazas en otro metodo
-        JLabel cartaBazaPC = new JLabel(img);
-        cartaBazaPC.setOpaque(true);
-        cartaBazaPC.setBounds(420,15,70,100);
-        bazaPC.add(cartaBazaPC);
-        JLabel cartaBazaUsuario = new JLabel(img);
-        cartaBazaUsuario.setOpaque(true);
-        cartaBazaUsuario.setBounds(10,400,70,100);
-        bazaUsuario.add(cartaBazaUsuario);
-
-    }
-
-    private JLabel crearLabelPC(){
-        JLabel labelBazaPC = new JLabel("BAZA PC");
-        Color color = new Color(54,146,47);
-        labelBazaPC.setBounds(420,5,70,10);
-        labelBazaPC.setFont(new Font("arial",Font.ITALIC,10));
-        labelBazaPC.setHorizontalAlignment(SwingConstants.CENTER);
-        labelBazaPC.setForeground(Color.BLUE);
-        labelBazaPC.setBackground(color);
-        labelBazaPC.setOpaque(true);
-
-        return labelBazaPC;
-    }
-
-    private JLabel crearLabelUsuario(){
-        JLabel labelBazaUsuario = new JLabel("BAZA USUARIO");
-        Color color = new Color(54,146,47);
-        labelBazaUsuario.setBounds(10,400,70,10);
-        labelBazaUsuario.setFont(new Font("arial", Font.ITALIC,8));
-        labelBazaUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-        labelBazaUsuario.setForeground(Color.BLUE);
-        labelBazaUsuario.setBackground(color);
-        labelBazaUsuario.setOpaque(true);
-
-        return labelBazaUsuario;
-    }
-
-    void addRepartirListener(ActionListener listener) {
-        boton.addActionListener(listener);
-    }
-
-    void addJuegaPCListener(ActionListener listener) {
-        boton2.addActionListener(listener);
-    }
-
-    void addDescartarListener(MouseListener listener) {
-        for (JLabel label: manoUsuario) {
-        label.addMouseListener(listener);
-        }
-    }
-
-    void setCartasManos(ArrayList<String> arrayCartaPc, ArrayList<String> arrayCartaUsuario) {
-        for (JLabel jlabel: manoPC) {
-            jlabel.setText(arrayCartaPc.get(manoPC.indexOf(jlabel)));
-        }
-        for (JLabel jlabel: manoUsuario) {
-            jlabel.setText(arrayCartaUsuario.get(manoUsuario.indexOf(jlabel)));
-        }
-    }
-
-    void setCartasUsuario(ArrayList<String> array) {
-        for (JLabel jlabel: manoUsuario) {
-            jlabel.setText(array.get(manoUsuario.indexOf(jlabel)));
-        }
     }
 
     private void setLabelPuntos(JLabel labelAux){
@@ -217,13 +98,89 @@ public class VistaPartida extends JFrame implements Observer {
 
     @Override
     public void updateMano() {
-        for (JLabel jLabel: manoUsuario) {
-            jLabel.setText(modelo.getStringMano(Integer.parseInt(jLabel.getName())));
-//            jLabel.setText(modelo.getStringMano(manoUsuario.indexOf(jLabel)));
-            if(modelo.getStringMano(Integer.parseInt(jLabel.getName())).equals(""))
-                jLabel.setBounds(200,290,jLabel.getWidth(),jLabel.getHeight());
-              //  jLabel.setBounds(230,130,jLabel.getWidth(),jLabel.getHeight());
-
+         int paso = 0;
+        mesaCartas = new ArrayList<>();
+        for (Component component: Arrays.asList(panel.getComponents())) {
+            if (component.getName() != null && StringUtils.isNumeric(component.getName()))
+                panel.remove(component);
+            panel.revalidate();
+            panel.repaint();
         }
+        for (Carta carta: modelo.getUsuarios().get(0).getMyMano()) {
+            JLabel jlabel = new JLabel();
+            manoUsuario.add(jlabel);
+            jlabel.setOpaque(true);
+            jlabel.setBounds(10+(80*paso++),400,70,100);
+            panel.add(jlabel);
+            jlabel.setName(String.valueOf(paso-1));
+            jlabel.setText(carta.toString());
+        }
+        System.out.println(modelo.getUsuarios().get(0).getMyMano().toString());
+    }
+
+    public void updateManoPC() {
+        int paso = 0;
+        for (Component component: panel.getComponents()) {
+            if (component.getName() != null && component.getName().equals("cartaPC"))
+                panel.remove(component);
+            panel.revalidate();
+            panel.repaint();
+        }
+        mesaCartas = new ArrayList<>();
+        for (Carta carta: modelo.getUsuarios().get(1).getMyMano()) {
+            JLabel jlabel = new JLabel();
+            manoPC.add(jlabel);
+            jlabel.setOpaque(true);
+            jlabel.setBounds(10+(80*paso++),15,70,100);
+            panel.add(jlabel);
+            jlabel.setText(carta.toString());
+            jlabel.setName("cartaPC");
+        }
+
+    }
+
+    public void updateMesa () {
+        int paso = 0;
+        mesaCartas = new ArrayList<>();
+        for (Carta carta: modelo.getMesaCartas().getCartas()) {
+                JLabel jlabel = new JLabel();
+                mesaCartas.add(jlabel);
+                jlabel.setOpaque(true);
+                jlabel.setBounds(210 + (80 * paso++), 140, 70, 100);
+                panel.add(jlabel);
+                jlabel.setText(carta.toString());
+                jlabel.setName("mesa");
+        }
+        if (modelo.getMesaCartas().getCartas().isEmpty()) {
+            for (Component component: panel.getComponents()) {
+                if (component.getName() != null && component.getName().equals("mesa"))
+                    panel.remove(component);
+                panel.revalidate();
+                panel.repaint();
+            }
+        }
+    }
+
+    public void limpiarCartas() {
+        mesaCartas.clear();
+
+    }
+
+    void addRepartirListener(ActionListener listener) {
+        botonRepartir.addActionListener(listener);
+    }
+
+    void addJuegaPCListener(ActionListener listener) {
+        botonJuegaPC.addActionListener(listener);
+    }
+
+    void addDescartarListener(MouseListener listener) {
+        for (JLabel label: manoUsuario) {
+            label.addMouseListener(listener);
+        }
+    }
+
+    void addNuevaBazaListener(ActionListener listener) {
+        botonNuevaBaza.addActionListener(listener);
     }
 }

@@ -8,7 +8,6 @@ public class MesaCartas {
     private final int cantUsuarios;
 
 
-
     public MesaCartas(int cantUsuarios) {
         cartas = new ArrayList<>();
         this.cantUsuarios = cantUsuarios;
@@ -25,6 +24,13 @@ public class MesaCartas {
 
     public ArrayList<Carta> getCartas() {
         return cartas;
+    }
+
+    public String getStringMesa(int index) {
+        if(index >= cartas.size())
+            return "";
+        else
+            return cartas.get(index).toString();
     }
 
     @Override

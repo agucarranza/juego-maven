@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 public class ControllerPartida {
 
@@ -17,21 +16,44 @@ public class ControllerPartida {
         this.vista = vista;
 
         this.vista.addRepartirListener(new RepartirListener());
-        this.vista.addDescartarListener(new DescartarListener());
         this.vista.addJuegaPCListener(new JuegaPCListener());
+        this.vista.addNuevaBazaListener(new NuevaBazaListener());
     }
-    class JuegaPCListener implements  ActionListener{
+
+    class NuevaBazaListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            vista.displayErrorMessage("Boton nueva Baza");
+            modelo.limpiarMesa();
+            modelo.toggleTurno();
+            System.out.println(modelo.getMesaCartas().toString());
+            System.out.println(modelo.getUsuarios().get(0).toString());
+            System.out.println(modelo.getUsuarios().get(1).toString());
+            vista.addDescartarListener(new DescartarListener());
+        }
+    }
+
+    class JuegaPCListener implements  ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            int paloTriunfo = modelo.getJugadaActiva().getPaloTriunfo();
             modelo.toggleTurno();
-            //Carta carta = modelo.getUsuarioEnTurno()(Robot).;
+            modelo.rotarPosicionJugador();
 
-           /* int indice = Integer.parseInt(e.getID());
-            System.out.println("Mouse evento: " + indice);
-            modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), indice);
-            System.out.println(modelo.getMesaCartas().toString());*/
+            Robot robot = (Robot)modelo.getUsuarioEnTurno();
+            Baza baza = new Baza(paloTriunfo);
+
+            int paloBaza = baza.getPaloBaza();
+            int indiceCarta = robot.elegirCartaTirar(paloTriunfo,paloBaza);
+            modelo.bajarALaMesa(robot,indiceCarta);
+            modelo.getJugadaActiva().procesarBaza(paloTriunfo, baza);
+            vista.updateManoPC();
+            System.out.println(modelo.getMesaCartas().toString());
+
+            modelo.estadisticasEvento();
         }
     }
 
@@ -39,20 +61,10 @@ public class ControllerPartida {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            ArrayList<String> arrayUsuario = new ArrayList<>();
-            ArrayList<String> arrayPC = new ArrayList<>();
-
-
-
-            for (Carta carta: modelo.getUsuarios().get(0).getMyMano()) {
-               arrayUsuario.add(carta.toString());
-            }
-            for (Carta carta: modelo.getUsuarios().get(1).getMyMano()) {
-                arrayPC.add(carta.toString());
-            }
-
-            vista.setCartasManos(arrayPC, arrayUsuario);
-
+            vista.displayErrorMessage("boton repartir");
+            modelo.getJugadaActiva().repartirManos();
+            //Cuando las cartas están creadas, se crean sus listeners.
+            vista.addDescartarListener(new DescartarListener());
         }
     }
 
@@ -60,31 +72,21 @@ public class ControllerPartida {
 
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
+            vista.displayErrorMessage("Clic en carta");
+
             int indice = Integer.parseInt(mouseEvent.getComponent().getName());
             System.out.println("Mouse evento: " + indice);
             modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), indice);
             System.out.println(modelo.getMesaCartas().toString());
             modelo.notificarObservers();
         }
-
         @Override
-        public void mousePressed(MouseEvent mouseEvent) {
-
-        }
-
+        public void mousePressed(MouseEvent mouseEvent) {}
         @Override
-        public void mouseReleased(MouseEvent mouseEvent) {
-
-        }
-
+        public void mouseReleased(MouseEvent mouseEvent) {}
         @Override
-        public void mouseEntered(MouseEvent mouseEvent) {
-
-        }
-
+        public void mouseEntered(MouseEvent mouseEvent) {}
         @Override
-        public void mouseExited(MouseEvent mouseEvent) {
-
-        }
+        public void mouseExited(MouseEvent mouseEvent) {}
     }
 }

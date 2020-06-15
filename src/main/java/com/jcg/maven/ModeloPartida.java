@@ -11,7 +11,7 @@ public class ModeloPartida implements Sujeto{
     private final MesaCartas mesaCartas;
     private final Mazo mazo;
     private final Usuario humano;
-    private final Usuario robot;
+    private final Robot robot;
     private boolean turno = false;
     private final ArrayList<Usuario> usuarios;
     private final ArrayList<Jugada> jugadas;
@@ -23,7 +23,7 @@ public class ModeloPartida implements Sujeto{
         this.mazo = new Mazo();
         //aca puede ir strategy
         this.humano = new Usuario(Usuario.HUMANO);
-        this.robot = new Usuario(Usuario.ROBOT);
+        this.robot = new Robot();
         this.jugadas = new ArrayList<>();
         this.usuarioEnTurno = humano;
         usuarios = new ArrayList<>();
@@ -67,7 +67,7 @@ public class ModeloPartida implements Sujeto{
     /**
      * Requiere que la partida tenga por lo menos una jugada creada.
      */
-    private void rotarPosicionJugador() {
+    public void rotarPosicionJugador() {
         if (jugadas.isEmpty())
             throw new NullPointerException("No hay ninguna jugada creada todavia.");
 
@@ -118,6 +118,8 @@ public class ModeloPartida implements Sujeto{
         for (Observer observer: observers) {
             observer.update();
             observer.updateMano();
+            observer.updateManoPC();
+            observer.updateMesa();
         }
     }
 
@@ -134,8 +136,6 @@ public class ModeloPartida implements Sujeto{
         notificarObservers();
     }
 
-
-
     public String getEstadisticas() { return estadisticas; }
 
     public String getStringMano(int index) {
@@ -145,6 +145,8 @@ public class ModeloPartida implements Sujeto{
             return humano.getMyMano().get(index).toString();
     }
 
-
-
+    public void limpiarMesa() {
+        mesaCartas.getCartas().clear();
+        notificarObservers();
+    }
 }
