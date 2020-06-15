@@ -3,6 +3,7 @@ package com.jcg.maven;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class VistaConsola extends JFrame {
 
@@ -35,7 +36,7 @@ public class VistaConsola extends JFrame {
         contenedorChat.setLayout(new GridLayout(1,1));
         contenedorChat.add(scroll);
         chat.append(">> ¡Bienvenido a la Vista Consola de la Mosca!\n" +
-                    ">> Ingrese 'Repartir' para que se repartan las cartas y comience el juego.\n");
+                    "Para ver los comandos de la consola escribí: ayuda\n");
     }
 
     private void panelEntrada(){
@@ -52,7 +53,7 @@ public class VistaConsola extends JFrame {
     }
 
     public String getEntrada() {
-        String str = entrada.getText();
+        String str = entrada.getText().toLowerCase().trim();
         entrada.setText(""); //Para limpiar el campo de entrada una vez que se leyo lo que se escribio
         return str;
     }
@@ -60,6 +61,7 @@ public class VistaConsola extends JFrame {
     public void addRepartirListener(ActionListener listener){
         botonEnviar.addActionListener(listener);
     }
+
 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
