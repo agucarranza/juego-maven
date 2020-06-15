@@ -1,7 +1,6 @@
 package com.jcg.maven;
 
 /**
- * Hello world!
  *
  */
 public class App
@@ -15,10 +14,11 @@ public class App
         VistaPartida vista = new VistaPartida(modelo);
         VistaConsola vistaConsola = new VistaConsola();
 
-        ControllerPartida controlador = new ControllerPartida(vista, modelo);
+        ControllerPartida controllerPartida = new ControllerPartida(vista, modelo);
+        ControllerConsola controllerConsola = new ControllerConsola(vistaConsola, modelo);
 
         vista.setVisible(true);
-       // vistaConsola.setVisible(true);
+        vistaConsola.setVisible(true);
 
         modelo.estadisticasEvento();
     }

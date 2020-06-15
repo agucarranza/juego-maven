@@ -3,7 +3,7 @@ package com.jcg.maven;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.KeyListener;
 
 public class VistaConsola extends JFrame {
 
@@ -35,8 +35,9 @@ public class VistaConsola extends JFrame {
         contenedorChat = new JPanel();
         contenedorChat.setLayout(new GridLayout(1,1));
         contenedorChat.add(scroll);
-        chat.append(">> ¡Bienvenido a la Vista Consola de la Mosca!\n" +
-                    "Para ver los comandos de la consola escribí: ayuda\n");
+        String str = "¡Bienvenido a la Consola de la Mosca!\n" +
+                     "Para ver los comandos de la consola ingrese: ayuda";
+        mostrarMsj(str);
     }
 
     private void panelEntrada(){
@@ -49,7 +50,7 @@ public class VistaConsola extends JFrame {
     }
 
     public void mostrarMsj(String msj) {
-        chat.append(">> " + msj + "\n");
+        chat.append(">> " + msj + "\n\n");
     }
 
     public String getEntrada() {
@@ -58,12 +59,16 @@ public class VistaConsola extends JFrame {
         return str;
     }
 
-    public void addRepartirListener(ActionListener listener){
+    public void addEntradaListener(ActionListener listener){
         botonEnviar.addActionListener(listener);
     }
 
+    public void addTecladoListener(KeyListener listener){
+        entrada.addKeyListener(listener);
+    }
 
-    public void displayErrorMessage(String errorMessage) {
-        JOptionPane.showMessageDialog(this, errorMessage);
+    public void displayErrorMessage() {
+        String str = "El comando ingresado no fue reconocido, ingrese un comando permitido.\nPara más información ingrese: ayuda";
+        mostrarMsj(str);
     }
 }
