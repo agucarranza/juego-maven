@@ -18,6 +18,22 @@ public class ControllerPartida {
         this.vista.addRepartirListener(new RepartirListener());
         this.vista.addJuegaPCListener(new JuegaPCListener());
         this.vista.addNuevaBazaListener(new NuevaBazaListener());
+        this.vista.addNuevaJugadaListener(new NuevaJugadaListener());
+    }
+
+    class NuevaJugadaListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            vista.displayErrorMessage("Inicia nueva partida");
+            modelo.asignarPuntoUsuario();
+            for (Usuario usuario: modelo.getUsuarios())
+                usuario.clearBazas();
+           //modelo.toggleTurno();
+            modelo.startJugada();
+            System.out.println(modelo.getUsuarios().get(0).getPuntos());
+            System.out.println(modelo.getUsuarios().get(1).getPuntos());
+        }
     }
 
     class NuevaBazaListener implements ActionListener {
@@ -28,8 +44,6 @@ public class ControllerPartida {
             modelo.limpiarMesa();
             modelo.toggleTurno();
             System.out.println(modelo.getMesaCartas().toString());
-            System.out.println(modelo.getUsuarios().get(0).toString());
-            System.out.println(modelo.getUsuarios().get(1).toString());
             vista.addDescartarListener(new DescartarListener());
         }
     }

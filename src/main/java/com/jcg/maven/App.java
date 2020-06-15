@@ -18,7 +18,7 @@ public class App
         ControllerConsola controllerConsola = new ControllerConsola(vistaConsola, modelo);
 
         vista.setVisible(true);
-        vistaConsola.setVisible(true);
+       // vistaConsola.setVisible(true);
 
 
     }

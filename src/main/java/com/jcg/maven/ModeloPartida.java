@@ -1,6 +1,9 @@
 package com.jcg.maven;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ModeloPartida implements Sujeto{
 
@@ -132,6 +135,8 @@ public class ModeloPartida implements Sujeto{
                 " BazasUsuario:" + humano.getMyBazas().size() +
                 " BazasRobot:" + robot.getMyBazas().size() +
                 " Cant.Jugadas:" + jugadas.size() +
+                " PuntosUsuario:" + humano.getPuntos() +
+                " PuntosRobot:" + robot.getPuntos() +
                 "</html>";
         notificarObservers();
     }
@@ -148,5 +153,15 @@ public class ModeloPartida implements Sujeto{
     public void limpiarMesa() {
         mesaCartas.getCartas().clear();
         notificarObservers();
+    }
+
+    /**
+     * Elige el usuario con mas bazas.
+     * @return Usuario ganador de la jugada.
+     */
+    public Usuario asignarPuntoUsuario() {
+        Usuario ganador = Collections.max(usuarios, Comparator.comparing(s -> s.getMyBazas().size()));
+        ganador.agregarPunto();
+        return ganador;
     }
 }

@@ -3,24 +3,23 @@ package com.jcg.maven;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class VistaPartida extends JFrame implements Observer {
     ModeloPartida modelo;
 
-    private ArrayList<JLabel> manoPC = new ArrayList<>();
-    private ArrayList<JLabel> manoUsuario = new ArrayList<>();
+    private final ArrayList<JLabel> manoPC = new ArrayList<>();
+    private final ArrayList<JLabel> manoUsuario = new ArrayList<>();
     private ArrayList<JLabel> mesaCartas = new ArrayList<>();
     private final JLabel titulo = new JLabel("ESTADISTICAS");
     private final JLabel estadisticas = new JLabel();
-    ImageIcon img = new ImageIcon("dorsal.jpg");
-    JButton botonRepartir, botonJuegaPC, botonNuevaBaza;
+    //ImageIcon img = new ImageIcon("dorsal.jpg");
+    JButton botonRepartir, botonJuegaPC, botonNuevaBaza, botonNuevaJugada;
     JPanel panel;
 
     public VistaPartida(ModeloPartida modelo) {
@@ -45,11 +44,6 @@ public class VistaPartida extends JFrame implements Observer {
 
     private void crearBotones(JPanel panelAux){
 
-        botonNuevaBaza = new JButton("Nueva Baza");
-        botonNuevaBaza.setName("botonNuevaBaza");
-        botonNuevaBaza.setBounds(560,370,150,30);
-        panelAux.add(botonNuevaBaza);
-
         botonRepartir = new JButton("Repartir cartas");
         botonRepartir.setName("botonRepartir");
         botonRepartir.setBounds(560,270,150,30);
@@ -59,6 +53,16 @@ public class VistaPartida extends JFrame implements Observer {
         botonJuegaPC.setName("botonJuegaPC");
         botonJuegaPC.setBounds(560,320,150,30);
         panelAux.add(botonJuegaPC);
+
+        botonNuevaBaza = new JButton("Nueva Baza");
+        botonNuevaBaza.setName("botonNuevaBaza");
+        botonNuevaBaza.setBounds(560,370,150,30);
+        panelAux.add(botonNuevaBaza);
+
+        botonNuevaJugada = new JButton("Nueva Jugada");
+        botonNuevaJugada.setName("botonNuevaJugada");
+        botonNuevaJugada.setBounds(560,420,150,30);
+        panelAux.add(botonNuevaJugada);
     }
 
     private void panelBazas(JPanel panelAux){
@@ -66,7 +70,7 @@ public class VistaPartida extends JFrame implements Observer {
         titulo.setBounds(550,15,140,20);
         setLabelPuntos(titulo);
 
-        estadisticas.setBounds(550,35,140,70);
+        estadisticas.setBounds(550,35,140,100);
         estadisticas.setVerticalAlignment(SwingConstants.TOP);
         setLabelPuntos(estadisticas);
         estadisticas.setText("<html>Partida no iniciada</html>");
@@ -100,7 +104,7 @@ public class VistaPartida extends JFrame implements Observer {
     public void updateMano() {
          int paso = 0;
         mesaCartas = new ArrayList<>();
-        for (Component component: Arrays.asList(panel.getComponents())) {
+        for (Component component: panel.getComponents()) {
             if (component.getName() != null && StringUtils.isNumeric(component.getName()))
                 panel.remove(component);
             panel.revalidate();
@@ -161,26 +165,25 @@ public class VistaPartida extends JFrame implements Observer {
         }
     }
 
-    public void limpiarCartas() {
-        mesaCartas.clear();
-
-    }
-
-    void addRepartirListener(ActionListener listener) {
+    public void addRepartirListener(ActionListener listener) {
         botonRepartir.addActionListener(listener);
     }
 
-    void addJuegaPCListener(ActionListener listener) {
+    public void addJuegaPCListener(ActionListener listener) {
         botonJuegaPC.addActionListener(listener);
     }
 
-    void addDescartarListener(MouseListener listener) {
+    public void addDescartarListener(MouseListener listener) {
         for (JLabel label: manoUsuario) {
             label.addMouseListener(listener);
         }
     }
 
-    void addNuevaBazaListener(ActionListener listener) {
+    public void addNuevaBazaListener(ActionListener listener) {
         botonNuevaBaza.addActionListener(listener);
+    }
+
+    public void addNuevaJugadaListener(ActionListener listener) {
+        botonNuevaJugada.addActionListener(listener);
     }
 }

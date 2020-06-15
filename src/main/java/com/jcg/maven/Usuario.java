@@ -10,6 +10,7 @@ public class Usuario {
     private final ArrayList<Baza>  myBazas;
     private final int tipoUsuario;
     private boolean pie = false;
+    private int puntos = 0;
 
 
     public Usuario(int tipo) {
@@ -40,6 +41,10 @@ public class Usuario {
             return myMano.remove(index);
         else throw new IndexOutOfBoundsException("Esa carta no existe.");
     }
+
+    public void agregarPunto() {puntos++;}
+
+    public int getPuntos() {return puntos;}
 
     public boolean isPie() {return pie;}
 
