@@ -35,9 +35,7 @@ public class MesaCartas {
 
     @Override
     public String toString() {
-        return "MesaCartas{" +
-                "cartas=" + cartas +
-                '}';
+        return "|| Cartas de la Mesa ||\n" + cartas;
     }
 }
 

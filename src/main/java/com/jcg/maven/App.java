@@ -12,16 +12,13 @@ public class App
 
 
         VistaPartida vista = new VistaPartida(modelo);
-        VistaConsola vistaConsola = new VistaConsola();
+        VistaConsola vistaConsola = new VistaConsola(modelo);
 
         ControllerPartida controllerPartida = new ControllerPartida(vista, modelo);
         ControllerConsola controllerConsola = new ControllerConsola(vistaConsola, modelo);
 
         vista.setVisible(true);
-       // vistaConsola.setVisible(true);
-
-
-
+        vistaConsola.setVisible(true);
 
     }
 }

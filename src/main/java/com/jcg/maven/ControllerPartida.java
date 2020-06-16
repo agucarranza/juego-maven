@@ -64,7 +64,7 @@ public class ControllerPartida {
             int indiceCarta = robot.elegirCartaTirar(paloTriunfo,paloBaza);
             modelo.bajarALaMesa(robot,indiceCarta);
             modelo.getJugadaActiva().procesarBaza(paloTriunfo, baza);
-            vista.updateManoPC();
+            vista.updateManoPC(); //Bruno: Borrar
             System.out.println(modelo.getMesaCartas().toString());
 
             modelo.estadisticasEvento();

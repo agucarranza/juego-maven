@@ -5,7 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
-public class VistaConsola extends JFrame {
+public class VistaConsola extends JFrame implements Observer {
+    private ModeloPartida modelo;
 
     private JTextArea chat;
     private JTextField entrada;
@@ -14,7 +15,10 @@ public class VistaConsola extends JFrame {
     private JPanel contenedorChat;
     private JScrollPane scroll; //Se genera una barra de scroll cuando supera el tamaño de la ventana
 
-    public VistaConsola() {
+    public VistaConsola(ModeloPartida modelo) {
+        this.modelo = modelo;
+        this.modelo.agregarObserver(this);
+
         setTitle("La Mosca - Consola");
         this.setSize(500, 388);
         panelChat();
@@ -54,7 +58,7 @@ public class VistaConsola extends JFrame {
     }
 
     public String getEntrada() {
-        String str = entrada.getText().toLowerCase().trim();
+        String str = entrada.getText().toLowerCase().replaceAll(" ","");
         entrada.setText(""); //Para limpiar el campo de entrada una vez que se leyo lo que se escribio
         return str;
     }
@@ -71,4 +75,30 @@ public class VistaConsola extends JFrame {
         String str = "El comando ingresado no fue reconocido, ingrese un comando permitido.\nPara más información ingrese: ayuda";
         mostrarMsj(str);
     }
+
+    @Override
+    public void update() {
+        mostrarMsj("|| Estadisticas ||\n" + modelo.getEstadisticas());
+    }
+
+    @Override
+    public void updateMano() {
+        String cartas="|| Cartas de tu Mano ||";
+        int index =0;
+
+        //Es get 0 ya que el primero que se agrega en el modelo es el usuario humano
+        for (Carta carta: modelo.getUsuarios().get(0).getMyMano()) {
+            index = modelo.getUsuarios().get(0).getMyMano().indexOf(carta) + 1;
+            cartas = cartas + "\n- Carta N° " + index +": " + carta.toString();
+        }
+        mostrarMsj(cartas);
+    }
+
+    @Override
+    public void updateMesa() {
+        mostrarMsj(modelo.getMesaCartas().toString());
+    }
+
+    @Override
+    public void updateManoPC() {}
 }

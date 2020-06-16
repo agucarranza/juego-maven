@@ -38,7 +38,6 @@ public class ControllerConsola {
             if(keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
                 leerEntrada();
         }
-
         @Override
         public void keyReleased(KeyEvent keyEvent) {}
         @Override
@@ -50,44 +49,46 @@ public class ControllerConsola {
 
         switch (entrada) {
             case "repartir":
-                vista.mostrarMsj(devolverCartas());
+                modelo.getJugadaActiva().repartirManos();
                 break;
 
             case "ayuda":
-                String ayuda = "Para comenzar el juego ingrese: Repartir \n" +
-                        "Para realizar una jugada de descarte ingrese el N° de carta a descatar.\n" +
-                        "Para volver a ver la estadisticas ingrese: Estadisticas.\n" +
-                        "Para finalizar la partida cierre la ventana.";
+                String ayuda =  "|| Ayuda ||\nPara comenzar el juego ingrese: repartir\n" +
+                                "Para realizar una jugada de descarte ingrese el N° de la carta a descatar\n" +
+                                "Para ver las estadisticas ingrese: estadisticas\n" +
+                                "Para que la computadora juegue su turno ingrese: juega pc\n" +
+                                "Para iniciar una nueva baza ingrese: nueva baza\n" +
+                                "Para iniciar una nueva jugada ingrese: nueva jugada\n" +
+                                "Para finalizar la partida cierre la ventana.";
                 vista.mostrarMsj(ayuda);
                 break;
 
             case "estadisticas":
-                vista.mostrarMsj(modelo.getEstadisticas());
+                vista.update();
+                break;
+
+            case "juegapc":
+                caseJuegaPC();
                 break;
 
             case "1":
-                caseDescarte(0);
-                vista.mostrarMsj(devolverCartas());
-                break;
-
             case "2":
-                caseDescarte(1);
-                vista.mostrarMsj(devolverCartas());
-                break;
-
             case "3":
-                caseDescarte(2);
-                vista.mostrarMsj(devolverCartas());
-                break;
-
             case "4":
-                caseDescarte(3);
-                vista.mostrarMsj(devolverCartas());
+            case "5":
+                int carta = Integer.parseInt(entrada);
+                vista.mostrarMsj("|| Carta N° " + carta + " descartada ||");
+                modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), carta-1);
+                System.out.println(modelo.getMesaCartas().toString());
+                modelo.notificarObservers();
                 break;
 
-            case "5":
-                caseDescarte(4);
-                vista.mostrarMsj(devolverCartas());
+            case "nuevajugada":
+                caseNuevaJugada();
+                break;
+
+            case "nuevabaza":
+                caseNuevaBaza();
                 break;
 
             default:
@@ -95,28 +96,38 @@ public class ControllerConsola {
         }
     }
 
-    private String devolverCartas(){
-
-        String cartas="Tus cartas \n";
-        int index =0;
-
-        /*for (Carta carta: modelo.getUsuarios().get(0).getMyMano()) {
-            index = modelo.getUsuarios().get(0).getMyMano().indexOf(carta) + 1;
-            cartas = cartas + "Carta N° " + index +": " + carta.toString() + "\n";
-        }*/
-
-        for (Carta carta: modelo.getUsuarios().get(1).getMyMano()) {
-            index = modelo.getUsuarios().get(1).getMyMano().indexOf(carta) + 1;
-            cartas = cartas + "Carta N° " + index +": " + carta.toString() + "\n";
-        }
-        return cartas;
-
+    private void caseNuevaBaza() {
+        vista.mostrarMsj("|| Nueva baza iniciada ||");
+        modelo.limpiarMesa();
+        modelo.toggleTurno();
+        System.out.println(modelo.getMesaCartas().toString());
     }
 
-    private void caseDescarte(int index)
-    {
-        modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), index);
+    private void caseNuevaJugada() {
+        vista.mostrarMsj("|| Nueva jugada iniciada ||");
+        modelo.asignarPuntoUsuario();
+        for (Usuario usuario: modelo.getUsuarios())
+            usuario.clearBazas();
+        //modelo.toggleTurno();
+        modelo.startJugada();
+        System.out.println(modelo.getUsuarios().get(0).getPuntos());
+        System.out.println(modelo.getUsuarios().get(1).getPuntos());
+    }
+
+    private void caseJuegaPC(){
+        vista.mostrarMsj("|| Juega la computadora ||");
+        int paloTriunfo = modelo.getJugadaActiva().getPaloTriunfo();
+        modelo.toggleTurno();
+        modelo.rotarPosicionJugador();
+
+        Robot robot = (Robot) modelo.getUsuarioEnTurno();
+        Baza baza = new Baza(paloTriunfo);
+
+        int paloBaza = baza.getPaloBaza();
+        int indiceCarta = robot.elegirCartaTirar(paloTriunfo, paloBaza);
+        modelo.bajarALaMesa(robot, indiceCarta);
+        modelo.getJugadaActiva().procesarBaza(paloTriunfo, baza);
         System.out.println(modelo.getMesaCartas().toString());
-        modelo.notificarObservers();
+        modelo.estadisticasEvento();
     }
 }
