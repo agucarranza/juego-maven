@@ -7,7 +7,7 @@ public class Jugada {
     private final Mazo mazo;
     private int paloTriunfo = -1;
     private final MesaCartas mesaCartas;
-    private ModeloPartida partida;
+    private final ModeloPartida partida;
 
     public Jugada(ArrayList<Usuario> arrayUsuarios, Mazo mazo, MesaCartas mesaCartas, ModeloPartida partida) {
         this.arrayUsuarios = arrayUsuarios;
@@ -42,15 +42,11 @@ public class Jugada {
      */
     public void procesarBaza(int paloTriunfo, Baza baza) throws ArrayIndexOutOfBoundsException {
         ArrayList<Carta> cartas = mesaCartas.getCartas();
-
         if ( (cartas.size() != arrayUsuarios.size()) || (paloTriunfo < 0) )
             throw new ArrayIndexOutOfBoundsException("No han tirado todos los jugadores," +
                                                      "o todavia no se ha establecido el triunfo");
-
-//        Baza baza = new Baza(paloTriunfo);
         for (Carta carta: cartas)
             baza.agregarCarta(carta);
-
         Usuario usuarioGanador = baza.calcularGanador();
         usuarioGanador.agregarBaza(baza);
         //return baza;
@@ -59,7 +55,6 @@ public class Jugada {
     public int getPaloTriunfo() {
         return paloTriunfo;
     }
-
 }
 
 

@@ -7,18 +7,14 @@ public class App
 {
     public static void main( String[] args )
     {
-        ModeloPartida modelo = ModeloPartida.getInstance();
-        Jugada jugada = modelo.startJugada();
-
-
+        ModeloPartida modelo = new ModeloPartida();
+        modelo.startJugada();
         VistaPartida vista = new VistaPartida(modelo);
-        VistaConsola vistaConsola = new VistaConsola(modelo);
-
-        ControllerPartida controllerPartida = new ControllerPartida(vista, modelo);
-        ControllerConsola controllerConsola = new ControllerConsola(vistaConsola, modelo);
-
+        new ControllerPartida(vista, modelo, new GanadorMaximo());
         vista.setVisible(true);
-        vistaConsola.setVisible(true);
 
+        VistaConsola vistaConsola = new VistaConsola(modelo);
+        ControllerConsola controllerConsola = new ControllerConsola(vistaConsola, modelo);
+       // vistaConsola.setVisible(true);
     }
 }

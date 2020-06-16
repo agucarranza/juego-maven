@@ -4,31 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ModeloPartida implements Sujeto{
+public class ModeloPartida implements Sujeto {
 
     private static ArrayList<Observer> observers;
     private String estadisticas;
 
     private Jugada jugadaActiva;
-    private static MesaCartas mesaCartas;
-    private static Mazo mazo;
-    private static Usuario humano;
-    private static Robot robot;
-    private static boolean turno = false;
-    private static ArrayList<Usuario> usuarios;
-    private static ArrayList<Jugada> jugadas;
-    private static Usuario usuarioEnTurno;
+    private final MesaCartas mesaCartas;
+    private final Mazo mazo;
+    private final Usuario humano;
+    private final Robot robot;
+    private boolean turno = false;
+    protected ArrayList<Usuario> usuarios;
+    private final ArrayList<Jugada> jugadas;
+    private Usuario usuarioEnTurno;
 
-    //SINGLETON
 
-    private static final ModeloPartida instance = new ModeloPartida();
-
-    private ModeloPartida() {}
-
-    public static ModeloPartida getInstance() {
+    public ModeloPartida() {
         mesaCartas = new MesaCartas(2);
-        mazo = new Mazo();
-        //aca puede ir strategy
+        mazo = Mazo.getInstance();
         humano = new Usuario(Usuario.HUMANO);
         robot = new Robot();
         jugadas = new ArrayList<>();
@@ -39,8 +33,6 @@ public class ModeloPartida implements Sujeto{
 
         observers = new ArrayList<>();
         System.out.println("Partida creada");
-
-        return instance;
     }
 
     /**
@@ -62,7 +54,7 @@ public class ModeloPartida implements Sujeto{
         turno = !turno;
     }
 
-    public Jugada startJugada() {
+    public void startJugada() {
         // implementado para que se puedan agregar mas jugadores
         // en el futuro.
         Jugada jugada = new Jugada(usuarios,mazo,mesaCartas,this);
@@ -70,7 +62,6 @@ public class ModeloPartida implements Sujeto{
         jugadaActiva = jugada;
 
         //estadisticasEvento();
-        return jugada;
     }
 
     /**

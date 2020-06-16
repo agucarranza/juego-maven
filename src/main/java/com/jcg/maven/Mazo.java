@@ -1,15 +1,17 @@
 package com.jcg.maven;
 
-import java.util.ArrayList;
-
 public class Mazo {
     public static final int NCARDS = 40;
 
-    private Carta[] miMazo;
-    private int currentCard;
+    private static Carta[] miMazo;
+    private static int currentCard;
 
-    //Aca puede haber un singleton
-    public Mazo() {
+    //SINGLETON
+
+    private static final Mazo instance = new Mazo();
+    private Mazo() {}
+
+    public static Mazo getInstance() {
         miMazo = new Carta[NCARDS];
         int i = 0;
 
@@ -19,6 +21,8 @@ public class Mazo {
 
         currentCard = 0;
         System.out.println("Mazo creado");
+
+        return instance;
     }
 
     public void barajar(int n) {
@@ -34,7 +38,7 @@ public class Mazo {
    		--------------------------------- */
             Carta tmp = miMazo[i];
             miMazo[i] = miMazo[j];
-            miMazo[j] = tmp;;
+            miMazo[j] = tmp;
         }
         currentCard = 0;   // Reset current card to deal
     }
