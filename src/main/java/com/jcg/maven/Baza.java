@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.InputMismatchException;
 
 public class Baza {
-    private ArrayList<Carta> cartas;
+    private final ArrayList<Carta> cartas;
     private Usuario owner = null;
     private int paloBaza = -1;
     private final int paloTriunfo;
@@ -18,7 +18,7 @@ public class Baza {
 
     public void agregarCarta(Carta carta) {
         cartas.add(carta);
-        if (cartas.isEmpty())
+        if (cartas.size() == 1)
             paloBaza = cartas.get(0).getPalo();  // Palo de la primera carta.
     }
 
@@ -28,10 +28,6 @@ public class Baza {
         }
         else
             return owner;
-    }
-
-    public void setOwner(Usuario owner) {
-        this.owner = owner;
     }
 
     /**

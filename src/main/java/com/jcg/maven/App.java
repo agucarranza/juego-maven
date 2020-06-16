@@ -7,7 +7,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        ModeloPartida modelo = new ModeloPartida();
+        ModeloPartida modelo = ModeloPartida.getInstance();
         Jugada jugada = modelo.startJugada();
 
 
@@ -19,6 +19,8 @@ public class App
 
         vista.setVisible(true);
        // vistaConsola.setVisible(true);
+
+
 
 
     }

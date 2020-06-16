@@ -1,40 +1,46 @@
 package com.jcg.maven;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class ModeloPartida implements Sujeto{
 
-    private final ArrayList<Observer> observers;
+    private static ArrayList<Observer> observers;
     private String estadisticas;
 
     private Jugada jugadaActiva;
-    private final MesaCartas mesaCartas;
-    private final Mazo mazo;
-    private final Usuario humano;
-    private final Robot robot;
-    private boolean turno = false;
-    private final ArrayList<Usuario> usuarios;
-    private final ArrayList<Jugada> jugadas;
-    private Usuario usuarioEnTurno;
+    private static MesaCartas mesaCartas;
+    private static Mazo mazo;
+    private static Usuario humano;
+    private static Robot robot;
+    private static boolean turno = false;
+    private static ArrayList<Usuario> usuarios;
+    private static ArrayList<Jugada> jugadas;
+    private static Usuario usuarioEnTurno;
 
+    //SINGLETON
 
-    public ModeloPartida() {
-        this.mesaCartas = new MesaCartas(2);
-        this.mazo = new Mazo();
+    private static final ModeloPartida instance = new ModeloPartida();
+
+    private ModeloPartida() {}
+
+    public static ModeloPartida getInstance() {
+        mesaCartas = new MesaCartas(2);
+        mazo = new Mazo();
         //aca puede ir strategy
-        this.humano = new Usuario(Usuario.HUMANO);
-        this.robot = new Robot();
-        this.jugadas = new ArrayList<>();
-        this.usuarioEnTurno = humano;
+        humano = new Usuario(Usuario.HUMANO);
+        robot = new Robot();
+        jugadas = new ArrayList<>();
+        usuarioEnTurno = humano;
         usuarios = new ArrayList<>();
         usuarios.add(humano);
         usuarios.add(robot);
 
         observers = new ArrayList<>();
         System.out.println("Partida creada");
+
+        return instance;
     }
 
     /**
@@ -53,7 +59,7 @@ public class ModeloPartida implements Sujeto{
             usuarioEnTurno = humano;
             else
                 usuarioEnTurno = robot;
-        this.turno = !turno;
+        turno = !turno;
     }
 
     public Jugada startJugada() {
@@ -143,13 +149,6 @@ public class ModeloPartida implements Sujeto{
 
     public String getEstadisticas() { return estadisticas; }
 
-    public String getStringMano(int index) {
-        if(index >= humano.getMyMano().size())
-            return "";
-        else
-            return humano.getMyMano().get(index).toString();
-    }
-
     public void limpiarMesa() {
         mesaCartas.getCartas().clear();
         notificarObservers();
@@ -157,11 +156,9 @@ public class ModeloPartida implements Sujeto{
 
     /**
      * Elige el usuario con mas bazas.
-     * @return Usuario ganador de la jugada.
      */
-    public Usuario asignarPuntoUsuario() {
+    public void asignarPuntoUsuario() {
         Usuario ganador = Collections.max(usuarios, Comparator.comparing(s -> s.getMyBazas().size()));
         ganador.agregarPunto();
-        return ganador;
     }
 }
