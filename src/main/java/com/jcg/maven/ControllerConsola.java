@@ -11,11 +11,11 @@ public class ControllerConsola {
     private final ModeloPartida modelo;
     private GanadorBehavior ganadorBehavior;
 
-    public ControllerConsola(VistaConsola vista, ModeloPartida modelo, GanadorBehavior ganadorBehavior){
+    public ControllerConsola(VistaConsola vista, ModeloPartida modelo){
 
         this.vista = vista;
         this.modelo = modelo;
-        this.ganadorBehavior = ganadorBehavior;
+        //this.ganadorBehavior = ganadorBehavior;
 
         this.vista.addEntradaListener(new EntradaListener());
         this.vista.addTecladoListener(new TecladoListener());

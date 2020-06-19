@@ -9,13 +9,13 @@ public class App
     {
         ModeloPartida modelo = new ModeloPartida();
         modelo.startJugada();
-        GanadorBehavior ganadorBehavior = new GanadorMaximo();
+       // GanadorBehavior ganadorBehavior = new GanadorMaximo();
 
         VistaPartida vista = new VistaPartida(modelo);
         VistaConsola vistaConsola = new VistaConsola(modelo);
 
-        new ControllerPartida(vista, modelo, ganadorBehavior);
-        new ControllerConsola(vistaConsola, modelo, ganadorBehavior);
+        new ControllerPartida(vista, modelo);
+        new ControllerConsola(vistaConsola, modelo);
 
         vista.setVisible(true);
         vistaConsola.setVisible(true);
