@@ -20,7 +20,7 @@ public class VistaConsola extends JFrame implements Observer {
         this.modelo.agregarObserver(this);
 
         setTitle("La Mosca - Consola");
-        this.setSize(500, 388);
+        this.setSize(550, 596);
         panelChat();
         panelEntrada();
 
@@ -32,7 +32,7 @@ public class VistaConsola extends JFrame implements Observer {
     }
 
     private void panelChat(){
-        chat = new JTextArea(20,12);
+        chat = new JTextArea(33,12);
         Color color = new Color(200, 200, 200);
         chat.setBackground(color);
         scroll = new JScrollPane(chat);

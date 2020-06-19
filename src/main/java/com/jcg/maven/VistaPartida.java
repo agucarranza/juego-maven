@@ -19,12 +19,12 @@ public class VistaPartida extends JFrame implements Observer {
     private final JLabel titulo = new JLabel("ESTADISTICAS");
     private final JLabel estadisticas = new JLabel();
     //ImageIcon img = new ImageIcon("dorsal.jpg");
-    JButton botonRepartir, botonJuegaPC, botonNuevaBaza, botonNuevaJugada;
+    JButton botonRepartir, botonJuegaPC, botonNuevaBaza, botonNuevaJugada, botonInvertirValores;
     JPanel panel;
 
     public VistaPartida(ModeloPartida modelo) {
         this.modelo = modelo;
-        setSize(1024, 768);
+        setSize(750, 560); //1024, 768
         setLocationRelativeTo(null);
         setTitle("La Mosca");
         panelPartida();
@@ -63,6 +63,11 @@ public class VistaPartida extends JFrame implements Observer {
         botonNuevaJugada.setName("botonNuevaJugada");
         botonNuevaJugada.setBounds(560,420,150,30);
         panelAux.add(botonNuevaJugada);
+
+        botonInvertirValores = new JButton("Invertir Valores");
+        botonInvertirValores.setName("botonInvertirValores");
+        botonInvertirValores.setBounds(560,470,150,30);
+        panelAux.add(botonInvertirValores);
     }
 
     private void panelBazas(JPanel panelAux){
@@ -77,7 +82,6 @@ public class VistaPartida extends JFrame implements Observer {
 
         panelAux.add(titulo);
         panelAux.add(estadisticas);
-
     }
 
     private void setLabelPuntos(JLabel labelAux){
@@ -186,4 +190,6 @@ public class VistaPartida extends JFrame implements Observer {
     public void addNuevaJugadaListener(ActionListener listener) {
         botonNuevaJugada.addActionListener(listener);
     }
+
+    public void addInvertirValoresListener(ActionListener listener) { botonInvertirValores.addActionListener(listener); }
 }

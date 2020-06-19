@@ -9,15 +9,17 @@ public class ControllerConsola {
 
     private final VistaConsola vista;
     private final ModeloPartida modelo;
+    private GanadorBehavior ganadorBehavior;
 
-    public ControllerConsola(VistaConsola vista, ModeloPartida modelo){
+    public ControllerConsola(VistaConsola vista, ModeloPartida modelo, GanadorBehavior ganadorBehavior){
 
         this.vista = vista;
         this.modelo = modelo;
+        this.ganadorBehavior = ganadorBehavior;
 
         this.vista.addEntradaListener(new EntradaListener());
         this.vista.addTecladoListener(new TecladoListener());
-        }
+    }
 
     /*
      * Para atender el evento de cuando se apreta el boton enviar.
@@ -48,6 +50,26 @@ public class ControllerConsola {
         String entrada = vista.getEntrada();
 
         switch (entrada) {
+            case "valoresascendentes":
+                vista.mostrarMsj("|| Valores de cartas configurados de forma ascendente ||");
+                this.ganadorBehavior = new GanadorMaximo();
+                break;
+
+            case "valoresdescendentes":
+                vista.mostrarMsj("|| Valores de cartas configurados de forma descendente ||");
+                this.ganadorBehavior = new GanadorMinimo();
+                break;
+
+            case "invertirvalores":
+                if(this.ganadorBehavior instanceof GanadorMaximo) {
+                    this.ganadorBehavior = new GanadorMinimo();
+                    vista.mostrarMsj("|| Valores de cartas configurados de forma descendente ||");
+                } else {
+                    this.ganadorBehavior = new GanadorMaximo();
+                    vista.mostrarMsj("|| Valores de cartas configurados de forma ascendente ||");
+                }
+                break;
+
             case "repartir":
                 modelo.getJugadaActiva().repartirManos();
                 break;
@@ -59,6 +81,9 @@ public class ControllerConsola {
                                 "Para que la computadora juegue su turno ingrese: juega pc\n" +
                                 "Para iniciar una nueva baza ingrese: nueva baza\n" +
                                 "Para iniciar una nueva jugada ingrese: nueva jugada\n" +
+                                "Para configurar las cartas con valores ascendentes ingrese: valores ascendentes\n" +
+                                "Para configurar las cartas con valores descendentes ingrese: valores descendentes\n" +
+                                "Para ivertir los valores de las cartas ingrese: invertir valores\n" +
                                 "Para finalizar la partida cierre la ventana.";
                 vista.mostrarMsj(ayuda);
                 break;
@@ -80,7 +105,7 @@ public class ControllerConsola {
                 vista.mostrarMsj("|| Carta N° " + carta + " descartada ||");
                 modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), carta-1);
                 System.out.println(modelo.getMesaCartas().toString());
-                modelo.notificarObservers();
+                modelo.estadisticasEvento();
                 break;
 
             case "nuevajugada":
@@ -101,6 +126,7 @@ public class ControllerConsola {
         modelo.limpiarMesa();
         modelo.toggleTurno();
         System.out.println(modelo.getMesaCartas().toString());
+        modelo.estadisticasEvento();
     }
 
     private void caseNuevaJugada() {
@@ -108,10 +134,8 @@ public class ControllerConsola {
         modelo.asignarPuntoUsuario();
         for (Usuario usuario: modelo.getUsuarios())
             usuario.clearBazas();
-        //modelo.toggleTurno();
         modelo.startJugada();
-        System.out.println(modelo.getUsuarios().get(0).getPuntos());
-        System.out.println(modelo.getUsuarios().get(1).getPuntos());
+        modelo.estadisticasEvento();
     }
 
     private void caseJuegaPC(){
@@ -122,6 +146,7 @@ public class ControllerConsola {
 
         Robot robot = (Robot) modelo.getUsuarioEnTurno();
         Baza baza = new Baza(paloTriunfo);
+        baza.setGanadorBehavior(ganadorBehavior);
 
         int paloBaza = baza.getPaloBaza();
         int indiceCarta = robot.elegirCartaTirar(paloTriunfo, paloBaza);
@@ -129,5 +154,10 @@ public class ControllerConsola {
         modelo.getJugadaActiva().procesarBaza(paloTriunfo, baza);
         System.out.println(modelo.getMesaCartas().toString());
         modelo.estadisticasEvento();
+    }
+
+    private void caseComportamiento(GanadorBehavior ganadorBehavior){
+        vista.mostrarMsj("|| Valores de cartas reconfigurados ||");
+        this.ganadorBehavior = ganadorBehavior;
     }
 }

@@ -52,7 +52,7 @@ public interface Controller {
     /**
      * Hay que especificar en el constructor la estrategia para ganar
      */
-    class JuegaPCListener implements  ActionListener {
+    class JuegaPCListener implements ActionListener {
         VistaPartida vista;
         ModeloPartida modelo;
         GanadorBehavior ganadorBehavior;
@@ -94,6 +94,25 @@ public interface Controller {
         }
     }
 
+    class InvertirValoresListener implements ActionListener {
+        VistaPartida vista;
+        ModeloPartida modelo;
+        GanadorBehavior ganadorBehavior;
+        public InvertirValoresListener(VistaPartida vista, ModeloPartida modelo, GanadorBehavior ganadorBehavior){
+            this.vista = vista;
+            this.modelo = modelo;
+            this.ganadorBehavior = ganadorBehavior;
+        }
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            vista.displayErrorMessage("boton invertir valores");
+            if(this.ganadorBehavior instanceof GanadorMaximo)
+                this.ganadorBehavior = new GanadorMinimo();
+            else
+                this.ganadorBehavior = new GanadorMaximo();
+        }
+    }
+
     class DescartarListener implements MouseListener {
         VistaPartida vista;
         ModeloPartida modelo;
@@ -108,7 +127,6 @@ public interface Controller {
             System.out.println("Mouse evento: " + indice);
             modelo.bajarALaMesa(modelo.getUsuarioEnTurno(), indice);
             System.out.println(modelo.getMesaCartas().toString());
-            modelo.notificarObservers();
             modelo.estadisticasEvento();
         }
         @Override

@@ -7,7 +7,7 @@ public class Baza {
     protected Usuario owner = null;
     protected int paloBaza = -1;
     protected final int paloTriunfo;
-    private GanadorBehavior ganadorBehavior = new GanadorMinimo(); //GanadorMaximo();
+    private GanadorBehavior ganadorBehavior = null; //GanadorMinimo(); //GanadorMaximo();
 
     public Baza(int paloTriunfo) {
         cartas = new ArrayList<>();
