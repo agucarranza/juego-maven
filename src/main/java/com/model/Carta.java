@@ -1,4 +1,4 @@
-package com.jcg.maven;
+package com.model;
 
 public class Carta {
     public static final int ORO     = 4;

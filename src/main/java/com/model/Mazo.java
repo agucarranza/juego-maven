@@ -1,4 +1,4 @@
-package com.jcg.maven;
+package com.model;
 
 public class Mazo {
     public static final int NCARDS = 40;

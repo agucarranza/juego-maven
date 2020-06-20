@@ -1,4 +1,7 @@
-package com.jcg.maven;
+package com.view;
+
+import com.model.Carta;
+import com.model.ModeloPartida;
 
 import javax.swing.*;
 import java.awt.*;

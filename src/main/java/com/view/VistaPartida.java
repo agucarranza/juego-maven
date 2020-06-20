@@ -1,5 +1,7 @@
-package com.jcg.maven;
+package com.view;
 
+import com.model.Carta;
+import com.model.ModeloPartida;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -95,7 +97,7 @@ public class VistaPartida extends JFrame implements Observer {
         labelAux.setOpaque(true);
     }
 
-    void displayErrorMessage(String errorMessage){
+    public void displayErrorMessage(String errorMessage){
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 

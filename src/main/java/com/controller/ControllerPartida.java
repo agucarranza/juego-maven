@@ -1,5 +1,8 @@
-package com.jcg.maven;
+package com.controller;
 
+
+import com.model.*;
+import com.view.VistaPartida;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

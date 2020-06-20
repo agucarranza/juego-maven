@@ -1,4 +1,6 @@
-package com.jcg.maven;
+package com.model;
+
+import com.view.Observer;
 
 public interface Sujeto {
 

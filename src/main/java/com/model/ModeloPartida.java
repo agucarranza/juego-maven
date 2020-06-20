@@ -1,4 +1,6 @@
-package com.jcg.maven;
+package com.model;
+
+import com.view.Observer;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,10 @@
-package com.jcg.maven;
+package com;
+
+import com.controller.ControllerConsola;
+import com.controller.ControllerPartida;
+import com.model.ModeloPartida;
+import com.view.VistaConsola;
+import com.view.VistaPartida;
 
 /**
  *

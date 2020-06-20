@@ -1,4 +1,4 @@
-package com.jcg.maven;
+package com.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
