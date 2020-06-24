@@ -1,6 +1,7 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Jugada {
     private final ArrayList<Usuario> arrayUsuarios;
@@ -12,7 +13,8 @@ public class Jugada {
     public Jugada(ArrayList<Usuario> arrayUsuarios, Mazo mazo, MesaCartas mesaCartas, ModeloPartida partida) {
         this.arrayUsuarios = arrayUsuarios;
         this.mazo = mazo;
-        this.mazo.barajar((int)(Math.random()));  //FIXME
+        Random rand = new Random();
+        this.mazo.barajar(rand.nextInt(100));  //FIXME
         this.mesaCartas = mesaCartas;
         System.out.println("Jugada creada!");
         this.partida = partida;
