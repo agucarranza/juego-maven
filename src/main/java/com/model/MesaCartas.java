@@ -26,13 +26,6 @@ public class MesaCartas {
         return cartas;
     }
 
-    public String getStringMesa(int index) {
-        if(index >= cartas.size())
-            return "";
-        else
-            return cartas.get(index).toString();
-    }
-
     @Override
     public String toString() {
         return "|| Cartas en la Mesa ||\n" + cartas;

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.InputMismatchException;
 
 public class GanadorMinimo implements GanadorBehavior {
+
     @Override
     public Carta seleccionarGanadorBehavior(ArrayList<Carta> cartasTriunfo, ArrayList<Carta> cartasBaza) {
         Carta cartaGanadora;
