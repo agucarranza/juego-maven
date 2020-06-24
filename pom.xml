@@ -4,7 +4,7 @@
     <groupId>com.jcg.maven</groupId>
     <artifactId>prueba-maven</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.3.0v</version>
     <name>prueba-maven</name>
     <url>http://maven.apache.org</url>
 
