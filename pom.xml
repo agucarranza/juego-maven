@@ -24,7 +24,7 @@
                         </goals>
                         <configuration>
                             <descriptorRefs>
-                                <descriptorRef>with-dependencies</descriptorRef>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
                             <archive>
                                 <manifest>
