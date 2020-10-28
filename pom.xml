@@ -137,6 +137,7 @@
                 <maxAllowedViolations>700</maxAllowedViolations>
                 <failsOnError>false</failsOnError>
                 <failOnViolation>true</failOnViolation>
+                <logViolationsToConsole>false</logViolationsToConsole>
             </configuration>
             <executions>
                 <execution>
