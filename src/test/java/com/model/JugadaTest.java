@@ -3,8 +3,6 @@ package com.model;
 import com.view.VistaPartida;
 import junit.framework.TestCase;
 
-import java.util.ArrayList;
-
 public class JugadaTest extends TestCase {
     ModeloPartida modelo;
     Jugada jugada;
@@ -21,7 +19,22 @@ public class JugadaTest extends TestCase {
         jugada.repartirManos();
         for (Usuario usuario: modelo.getUsuarios()
              ) {
-            assertTrue(5 == usuario.getMyMano().size());
+            assertEquals(5, usuario.getMyMano().size());
         }
+    }
+
+    public void testProcesarBaza() {
+        jugada.repartirManos();
+        modelo.bajarALaMesa(modelo.usuarios.get(0),1);
+        modelo.bajarALaMesa(modelo.usuarios.get(1),1);
+        Baza baza = new Baza(1);
+        baza.setGanadorBehavior(new GanadorMinimo());
+        jugada.procesarBaza(1,baza);
+        assertEquals(new Usuario(1).getTipoUsuario(), modelo.usuarios.get(0).getTipoUsuario());
+
+
+
+
+
     }
 }
