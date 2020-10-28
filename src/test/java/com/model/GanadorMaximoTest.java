@@ -18,11 +18,18 @@ public class GanadorMaximoTest extends TestCase {
         cartasBaza.add(new Carta(1,1));
         cartasTriunfo.add(new Carta(1,2));
         cartasTriunfo.add(new Carta(1,3));
-        ganadorBehavior = new GanadorMinimo();
+        ganadorBehavior = new GanadorMaximo();
     }
 
     public void testSeleccionarGanadorBehavior() {
         Carta carta = ganadorBehavior.seleccionarGanadorBehavior(cartasTriunfo, cartasBaza);
-        assertEquals(2,carta.getNumero());
+        assertEquals(3,carta.getNumero());
+    }
+
+    public void testSeleccionarGanadorBehavior2() {
+        cartasTriunfo.clear();
+        cartasBaza.add(new Carta(1,1));
+        Carta carta = ganadorBehavior.seleccionarGanadorBehavior(cartasTriunfo, cartasBaza);
+        assertEquals(1,carta.getNumero());
     }
 }
