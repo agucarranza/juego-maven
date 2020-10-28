@@ -5,16 +5,16 @@ import java.util.Random;
 
 public class Jugada {
     private final ArrayList<Usuario> arrayUsuarios;
-    private final Mazo mazo;
+    private final MazoUtils mazoUtils;
     private int paloTriunfo = -1;
     private final MesaCartas mesaCartas;
     private final ModeloPartida partida;
 
-    public Jugada(ArrayList<Usuario> arrayUsuarios, Mazo mazo, MesaCartas mesaCartas, ModeloPartida partida) {
+    public Jugada(ArrayList<Usuario> arrayUsuarios, MazoUtils mazoUtils, MesaCartas mesaCartas, ModeloPartida partida) {
         this.arrayUsuarios = arrayUsuarios;
-        this.mazo = mazo;
+        this.mazoUtils = mazoUtils;
         Random rand = new Random();
-        this.mazo.barajar(rand.nextInt(100));  //FIXME
+        this.mazoUtils.barajar(rand.nextInt(100));  //FIXME
         this.mesaCartas = mesaCartas;
         System.out.println("Jugada creada!");
         this.partida = partida;
@@ -27,9 +27,9 @@ public class Jugada {
     public void repartirManos() {
         for (Usuario usuario: arrayUsuarios) {
             for(int i=0; i<5; i++) {
-                Carta carta = mazo.repartir();
+                Carta carta = mazoUtils.repartir();
                 usuario.recibirCarta(carta);
-                if ((i==4)&&(!usuario.isPie()))
+                if (i==4&&!usuario.isPie())
                     paloTriunfo = carta.getPalo();
             }
         }
@@ -44,7 +44,7 @@ public class Jugada {
      */
     public void procesarBaza(int paloTriunfo, Baza baza) throws ArrayIndexOutOfBoundsException {
         ArrayList<Carta> cartas = mesaCartas.getCartas();
-        if ( (cartas.size() != arrayUsuarios.size()) || (paloTriunfo < 0) )
+        if ( cartas.size() != arrayUsuarios.size() || paloTriunfo < 0)
             throw new ArrayIndexOutOfBoundsException("No han tirado todos los jugadores," +
                                                      "o todavia no se ha establecido el triunfo");
         for (Carta carta: cartas)

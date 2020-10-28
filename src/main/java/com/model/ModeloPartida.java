@@ -13,7 +13,7 @@ public class ModeloPartida implements Sujeto {
 
     private Jugada jugadaActiva;
     private final MesaCartas mesaCartas;
-    private final Mazo mazo;
+    private final MazoUtils mazoUtils;
     private final Usuario humano;
     private final Robot robot;
     private boolean turno = false;
@@ -24,7 +24,7 @@ public class ModeloPartida implements Sujeto {
 
     public ModeloPartida() {
         mesaCartas = new MesaCartas(2);
-        mazo = Mazo.getInstance();
+        mazoUtils = MazoUtils.getInstance();
         humano = new Usuario(Usuario.HUMANO);
         robot = new Robot();
         jugadas = new ArrayList<>();
@@ -59,7 +59,7 @@ public class ModeloPartida implements Sujeto {
     public void startJugada() {
         // implementado para que se puedan agregar mas jugadores
         // en el futuro.
-        Jugada jugada = new Jugada(usuarios,mazo,mesaCartas,this);
+        Jugada jugada = new Jugada(usuarios, mazoUtils,mesaCartas,this);
         jugadas.add(jugada);
         jugadaActiva = jugada;
 
