@@ -159,8 +159,4 @@ public class ControllerConsola {
         modelo.estadisticasEvento();
     }
 
-    private void caseComportamiento(GanadorBehavior ganadorBehavior){
-        vista.mostrarMsj("|| Valores de cartas reconfigurados ||");
-        this.ganadorBehavior = ganadorBehavior;
-    }
 }

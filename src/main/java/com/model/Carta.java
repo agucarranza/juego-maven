@@ -13,7 +13,7 @@ public class Carta {
 
     public Carta(int myPalo, int myNumero )
     {
-        if ( ( myNumero > 10 ) || (myPalo > 4) ){
+        if  ( myNumero > 10  || myPalo > 4) {
             throw new IndexOutOfBoundsException();
         }
    	    else
