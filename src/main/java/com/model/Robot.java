@@ -3,7 +3,6 @@ package com.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.InputMismatchException;
 
 public class Robot extends Usuario {
 
@@ -33,7 +32,6 @@ public class Robot extends Usuario {
             carta = Collections.max(cartasBaza, Comparator.comparing(Carta::getNumero));
             return myMano.indexOf(carta);
         }
-        else
-            throw new InputMismatchException("El palo de la baza no coincide con las cartas analizadas");
+        else return 0;
     }
 }
