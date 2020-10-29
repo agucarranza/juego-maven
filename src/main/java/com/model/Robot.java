@@ -3,7 +3,6 @@ package com.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.InputMismatchException;
 
 public class Robot extends Usuario {
 
