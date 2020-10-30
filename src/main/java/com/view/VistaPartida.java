@@ -81,7 +81,7 @@ public class VistaPartida extends JFrame implements Observer {
         estadisticas.setVerticalAlignment(SwingConstants.TOP);
         setLabelPuntos(estadisticas);
         estadisticas.setText("<html>Partida no iniciada</html>");
-
+        estadisticas.setName("estadisticas");
         panelAux.add(titulo);
         panelAux.add(estadisticas);
     }
@@ -95,6 +95,7 @@ public class VistaPartida extends JFrame implements Observer {
         labelAux.setForeground(Color.BLACK);
         labelAux.setBorder(border);
         labelAux.setOpaque(true);
+
     }
 
     public void displayErrorMessage(String errorMessage){
